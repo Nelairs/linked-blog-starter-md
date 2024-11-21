@@ -1,0 +1,1 @@
+Explore penetration testing tools like Metasploit, Wireshark, and Burp Suite. Furthermore, discover using Python for penetration testing.
