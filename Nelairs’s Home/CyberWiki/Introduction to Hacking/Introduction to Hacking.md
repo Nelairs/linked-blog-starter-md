@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-These are notes taken during the s4vitar’s course.  TESTETSTSS
-
-=======
 These are notes taken during the s4vitar’s course. 
->>>>>>> origin/main
 # Basic Concepts
 
 ## IP Addresses (IPV4 and IPV6)
