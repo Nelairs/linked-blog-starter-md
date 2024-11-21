@@ -8,7 +8,7 @@ A self-made wiki with knowledge acquired during my career
 
 [[Linux Introduction]]
 
-[[git-clone/Notion-export/Nelairs’s Home/CyberWiki/Environment Customization/Environment Customization]]
+[[git-clone/Nelairs’s Home/CyberWiki/Environment Customization/Environment Customization]]
 
 [[Introduction to Hacking]]
 
