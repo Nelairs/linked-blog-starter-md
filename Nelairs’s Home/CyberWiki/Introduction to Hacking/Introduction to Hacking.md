@@ -1,4 +1,4 @@
-These are notes taken during the s4vitar’s course.
+These are notes taken during the s4vitar’s course.  TESTETSTSST
 
 # Basic Concepts
 
@@ -9,7 +9,6 @@ The IP can be seen as a numeric tag that logically identifies an endpoint in the
 ![[Untitled 22.png]]
 In this case this is the IP that is identifying my endpoint
 
-  
 
 ![[Untitled 1 3.png|Untitled 1 3.png]]
 
