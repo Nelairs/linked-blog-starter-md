@@ -6,7 +6,7 @@ These are notes taken during the s4vitar’s course.
 
 The IP can be seen as a numeric tag that logically identifies an endpoint in the network.
 
-![[photos/Untitled 22.png|photos/Untitled 22.png]]
+[![Untitled 22.png](photos/Untitled 22.png)]
 
 In this case this is the IP that is identifying my endpoint
 
