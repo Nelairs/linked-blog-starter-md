@@ -1,5 +1,4 @@
-These are notes taken during the s4vitar’s course.  TESTETSTSST
-
+These are notes taken during the s4vitar’s course. 
 # Basic Concepts
 
 ## IP Addresses (IPV4 and IPV6)
