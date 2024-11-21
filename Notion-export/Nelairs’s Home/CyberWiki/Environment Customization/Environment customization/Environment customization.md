@@ -27,7 +27,7 @@ En caso de que os salga algún error relacionado con ‘**xinerama**‘, podéis
 
 Finalmente, instalaremos ‘**bspwm**‘ con el comando ‘**sudo apt install bspwm**‘. Este es un paso que se me olvida aplicar en esta clase, pero aún así lo hacemos más adelante. Mi recomendación es que lo hagáis ya para evitar problemas futuros.
 
-![[/Untitled 565.png|Untitled 565.png]]
+![[Untitled 565.png|Untitled 565.png]]
 
 ¡Recordad que está prohibido hacer un ‘**apt upgrade**‘!
 
@@ -67,27 +67,27 @@ en sxhkdrc cambiar terminal a kitty
 
 cambiar focus node in given direction a las flechas
 
-![[/Untitled 1 30.png|Untitled 1 30.png]]
+![[Untitled 1 30.png|Untitled 1 30.png]]
 
 Cambiar preseleccion de ventana (donde spawneara)
 
-![[/Untitled 2 23.png|Untitled 2 23.png]]
+![[Untitled 2 23.png|Untitled 2 23.png]]
 
 Cambiar cancelacion preseleccion
 
-![[/Untitled 3 23.png|Untitled 3 23.png]]
+![[Untitled 3 23.png|Untitled 3 23.png]]
 
 En move/resize cambiar
 
-![[/Untitled 4 23.png|Untitled 4 23.png]]
+![[Untitled 4 23.png|Untitled 4 23.png]]
 
 Crear el custom resize para el bspwn_resize
 
-![[/Untitled 5 16.png|Untitled 5 16.png]]
+![[Untitled 5 16.png|Untitled 5 16.png]]
 
-![[/Untitled 6 14.png|Untitled 6 14.png]]
+![[Untitled 6 14.png|Untitled 6 14.png]]
 
-![[/Untitled 7 14.png|Untitled 7 14.png]]
+![[Untitled 7 14.png|Untitled 7 14.png]]
 
 ## Installing Polybar
 
@@ -134,11 +134,11 @@ En esta clase también hemos instalado ‘**rofi**‘, lo hemos hecho mediante l
 
 - **apt install rofi**
 
-![[/Untitled 8 13.png|Untitled 8 13.png]]
+![[Untitled 8 13.png|Untitled 8 13.png]]
 
 Con esto hecho, ya migramos a nuestro entorno ‘**bspwm**‘ y verificamos que todos los atajos estén funcionando correctamente.
 
-![[/Untitled 9 11.png|Untitled 9 11.png]]
+![[Untitled 9 11.png|Untitled 9 11.png]]
 
 ## Configuring Kitty, Fonts and installing FEH
 
@@ -264,11 +264,11 @@ Os compartimos a continuación el fondo de pantalla que utilizamos en esta clase
 
 Goto nerdfonts and download hack nerd fonts package
 
-![[/Untitled 10 8.png|Untitled 10 8.png]]
+![[Untitled 10 8.png|Untitled 10 8.png]]
 
 move the fonts
 
-![[/Untitled 11 8.png|Untitled 11 8.png]]
+![[Untitled 11 8.png|Untitled 11 8.png]]
 
 Unzip it
 
@@ -280,15 +280,15 @@ Paste the scripts above and reboot the window, it will launch zsh and its config
 
 For the ZSH install some plugins
 
-![[/Untitled 12 7.png|Untitled 12 7.png]]
+![[Untitled 12 7.png|Untitled 12 7.png]]
 
 Download kitty lastest version kitty github > releases > GPG signature linux amd64 binary bundle
 
-![[/Untitled 13 7.png|Untitled 13 7.png]]
+![[Untitled 13 7.png|Untitled 13 7.png]]
 
-![[/Untitled 14 7.png|Untitled 14 7.png]]
+![[Untitled 14 7.png|Untitled 14 7.png]]
 
-![[/Untitled 15 7.png|Untitled 15 7.png]]
+![[Untitled 15 7.png|Untitled 15 7.png]]
 
 kitty +kitten icat <image>
 
@@ -298,11 +298,11 @@ Agregar en bspmwrc /home/n3l4irs/Pictures/Wallpapers/<imagen>
 
 Clone repository https://github.com/VaughnValle/blue-sky.git
 
-![[/Untitled 16 7.png|Untitled 16 7.png]]
+![[Untitled 16 7.png|Untitled 16 7.png]]
 
-![[/Untitled 17 6.png|Untitled 17 6.png]]
+![[Untitled 17 6.png|Untitled 17 6.png]]
 
-![[/Untitled 18 6.png|Untitled 18 6.png]]
+![[Untitled 18 6.png|Untitled 18 6.png]]
 
 fc-cache -v
 
@@ -791,11 +791,11 @@ updatedb
 
 Cambiar en LS_COLORS los 01 (negrita) si queres cambiar al usar lsd
 
-![[/Untitled 19 6.png|Untitled 19 6.png]]
+![[Untitled 19 6.png|Untitled 19 6.png]]
 
 Fix java burpsuite problem
 
-![[/Untitled 20 6.png|Untitled 20 6.png]]
+![[Untitled 20 6.png|Untitled 20 6.png]]
 
 + add to bspwmrc wname LG3D &
 
@@ -843,19 +843,19 @@ Recordad que en caso de que vuestro nombre de interfaz sea otro, tenéis que ada
 
 add font hack nerd fonts
 
-![[/Untitled 21 6.png|Untitled 21 6.png]]
+![[Untitled 21 6.png|Untitled 21 6.png]]
 
-![[/Untitled 22 6.png|Untitled 22 6.png]]
+![[Untitled 22 6.png|Untitled 22 6.png]]
 
-![[/Untitled 23 5.png|Untitled 23 5.png]]
+![[Untitled 23 5.png|Untitled 23 5.png]]
 
-![[/Untitled 24 5.png|Untitled 24 5.png]]
+![[Untitled 24 5.png|Untitled 24 5.png]]
 
-![[/Untitled 25 5.png|Untitled 25 5.png]]
+![[Untitled 25 5.png|Untitled 25 5.png]]
 
-![[/Untitled 26 5.png|Untitled 26 5.png]]
+![[Untitled 26 5.png|Untitled 26 5.png]]
 
-![[/Untitled 27 5.png|Untitled 27 5.png]]
+![[Untitled 27 5.png|Untitled 27 5.png]]
 
 ## Creando nuevos módulos en la Polybar
 
@@ -885,11 +885,11 @@ Asimismo, os comparto las funciones ‘**settarget**‘ y ‘**cleartarget**‘ 
 
 - [https://pastebin.com/z0Hy7PUB](https://pastebin.com/z0Hy7PUB) [**settarget**]
 
-![[/Untitled 28 5.png|Untitled 28 5.png]]
+![[Untitled 28 5.png|Untitled 28 5.png]]
 
 - [https://pastebin.com/JnHSrq3Y](https://pastebin.com/JnHSrq3Y) [**cleartarget**]
 
-![[/Untitled 29 5.png|Untitled 29 5.png]]
+![[Untitled 29 5.png|Untitled 29 5.png]]
 
 Recordad que por defecto estas definiciones vienen con la ruta ‘**s4vitar**‘ contemplada, en vuestro caso tendréis que cambiarlo a vuestro usuario correspondiente.
 
@@ -911,7 +911,7 @@ download raw with wget into the directory /usr/share/zsh-sudo owner and group n3
 
 Add to zshrc
 
-![[/Untitled 30 5.png|Untitled 30 5.png]]
+![[Untitled 30 5.png|Untitled 30 5.png]]
 
 For NeoVIM
 

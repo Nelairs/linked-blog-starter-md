@@ -1,11 +1,11 @@
 So Linux is based on files, everything is a file, everything is a directory
 
-![[/Untitled 552.png|Untitled 552.png]]
+![[Untitled 552.png|Untitled 552.png]]
 
 If you list the root, you’ll find every directory related to  
   
 
-![[/Untitled 1 18.png|Untitled 1 18.png]]
+![[Untitled 1 18.png|Untitled 1 18.png]]
 
 Let’s try to focus on the more important ones
 

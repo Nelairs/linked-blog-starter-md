@@ -6,19 +6,19 @@ These are notes taken during the s4vitar’s course.
 
 The IP can be seen as a numeric tag that logically identifies an endpoint in the network.
 
-![[/Untitled 22.png|Untitled 22.png]]
+![[Untitled 22.png|Untitled 22.png]]
 
 In this case this is the IP that is identifying my endpoint
 
   
 
-![[/Untitled 1 3.png|Untitled 1 3.png]]
+![[Untitled 1 3.png|Untitled 1 3.png]]
 
 Representing the IP address as binary
 
 Number of IPv4 vs IPv6 possible addresses
 
-![[/Untitled 2 3.png|Untitled 2 3.png]]
+![[Untitled 2 3.png|Untitled 2 3.png]]
 
   
 
@@ -26,13 +26,13 @@ Number of IPv4 vs IPv6 possible addresses
 
 A MAC address is an 48 bits identifier that belongs to only one phisical device
 
-![[/Untitled 3 3.png|Untitled 3 3.png]]
+![[Untitled 3 3.png|Untitled 3 3.png]]
 
 Now the first three bytes belongs to the OUI (Organization Unique Identifier) and the last three belong to the NIC (Network Interface Controller)
 
   
 
-![[/Untitled 4 3.png|Untitled 4 3.png]]
+![[Untitled 4 3.png|Untitled 4 3.png]]
 
 If we scan the network using `arp-scan` we can see that the results have different pairs of IP addresses and MAC addresses, and a Name.
 
@@ -66,7 +66,7 @@ It is called three way because there are three steps to begin the connection.
 
 SYN>SYN ACK>ACK
 
-![[/Untitled 5 3.png|Untitled 5 3.png]]
+![[Untitled 5 3.png|Untitled 5 3.png]]
 
 ## OSI Model
 
@@ -76,7 +76,7 @@ The OSI Model is a standard for network protocols, this lets us understand how t
 
 The model has 7 layers.
 
-![[/Untitled 6 2.png|Untitled 6 2.png]]
+![[Untitled 6 2.png|Untitled 6 2.png]]
 
 1- **Physical layer:** This is the lowest layer of the OSI model, which is responsible for the transmission of data through the physical medium of the network, such as copper or fiber optic cables.
 
@@ -98,7 +98,7 @@ Subnetting is technique used to divide a network into smaller subnetworks, this 
 
 ### Netmask
 
-![[/Untitled 7 2.png|Untitled 7 2.png]]
+![[Untitled 7 2.png|Untitled 7 2.png]]
 
 If we see the results of the command ifconfig, we can see that there is something called **netmask,** this gives us information about how the network is configured, and can make some conclusion of how to scan the network
 
@@ -106,7 +106,7 @@ If we see the results of the command ifconfig, we can see that there is somethin
 
 To interpret a netmask we first have to translate from decimal to binary the four octets
 
-![[/Untitled 8 2.png|Untitled 8 2.png]]
+![[Untitled 8 2.png|Untitled 8 2.png]]
 
 This is a **255.255.255.0** netmask converted to binary
 
@@ -130,7 +130,7 @@ So basically the /24 netmask is equal to **11111111.11111111.11111111**.0000000 
 
 Now and whats up with the zeros? Well the zeros gives us the number of hosts/endpints that can be configured in the network, in this case there are 8 zeros so, 2^8 = 255 total hosts
 
-![[/Untitled 9 2.png|Untitled 9 2.png]]
+![[Untitled 9 2.png|Untitled 9 2.png]]
 
 > [!info] CIDR to IPv4 Address Range Utility Tool | IPAddressGuide  
 > Free IP address tool to translate IPv4 address range into CIDR (Classless Inter-Domain Routing) format and vice-versa.  
@@ -216,7 +216,7 @@ What I often use is -p- which scans all **65535** ports that can exists
 
 When we execute the scan as told in the last command, nmap will report ports that are either **open or filtered** this because sometimes cannot assure that the port is open.
 
-![[/Untitled 10 2.png|Untitled 10 2.png]]
+![[Untitled 10 2.png|Untitled 10 2.png]]
 
   
 
@@ -226,7 +226,7 @@ Nmap also has a `--top-ports` lists which are the most used and known ports, you
 
 Using `-v` parameter which is verbose, it prints out what is doing
 
-![[/Untitled 11 2.png|Untitled 11 2.png]]
+![[Untitled 11 2.png|Untitled 11 2.png]]
 
 In this case we can se things like DNS reolution, this slows thescan, and we can obviate this if we dont need it with parameter `-n`
 
@@ -234,7 +234,7 @@ In this case we can se things like DNS reolution, this slows thescan, and we can
 
 There is a `-T` parameter which controls the speed of the scans at cost of being more notorious or more sneaky
 
-![[/Untitled 12 2.png|Untitled 12 2.png]]
+![[Untitled 12 2.png|Untitled 12 2.png]]
 
 ---
 
@@ -268,7 +268,7 @@ this helps to evade using a different MTU than the firewall is expecting
 
 Using `nmap --help` we can see all the parameters to evade
 
-![[/Untitled 13 2.png|Untitled 13 2.png]]
+![[Untitled 13 2.png|Untitled 13 2.png]]
 
   
 
@@ -292,9 +292,9 @@ So NMAP uses scripts which are written in LUA language, in this case its extensi
 
 So if we look for this scripts, using `locate .nse`
 
-![[/Untitled 14 2.png|Untitled 14 2.png]]
+![[Untitled 14 2.png|Untitled 14 2.png]]
 
-![[/Untitled 15 2.png|Untitled 15 2.png]]
+![[Untitled 15 2.png|Untitled 15 2.png]]
 
 So this scripts can be used with the parameter `--script`, but there is also the parameter `-sC` which executes some basic recon scripts
 
@@ -304,11 +304,11 @@ Every script has its own category or multiple category, this shows us for what i
 
 `locate .nse | xargs grep "categories"`
 
-![[/Untitled 16 2.png|Untitled 16 2.png]]
+![[Untitled 16 2.png|Untitled 16 2.png]]
 
 These are the 14 categories taht exists
 
-![[/Untitled 17 2.png|Untitled 17 2.png]]
+![[Untitled 17 2.png|Untitled 17 2.png]]
 
 ## Alternatives for enumeration
 
@@ -318,13 +318,13 @@ As a Pentester we have to have alternatives, this is useful for when we are capp
 
 So lets make a script for enumerating ports using as a base file redirectors
 
-![[/Untitled 18 2.png|Untitled 18 2.png]]
+![[Untitled 18 2.png|Untitled 18 2.png]]
 
 As seen when we send a empty string to /dev/tcp/ if the port is available it returns a 0 as status code
 
-![[/Untitled 19 2.png|Untitled 19 2.png]]
+![[Untitled 19 2.png|Untitled 19 2.png]]
 
-![[/Untitled 20 2.png|Untitled 20 2.png]]
+![[Untitled 20 2.png|Untitled 20 2.png]]
 
 So we can create this one-liner  
   
@@ -505,13 +505,13 @@ https://github.com/OJ/gobuster
 
 To use the tool we clone the repo and use `go build .` OR `go build -ldflags "-s -w" .` to reduce the size
 
-![[/Untitled 21 2.png|Untitled 21 2.png]]
+![[Untitled 21 2.png|Untitled 21 2.png]]
 
   
 
 Another tool to use is **wfuzz,** wfuzz works similar as gobuster but is written in python
 
-![[/Untitled 22 2.png|Untitled 22 2.png]]
+![[Untitled 22 2.png|Untitled 22 2.png]]
 
 The main difference is that we have to indicate were to replace
 

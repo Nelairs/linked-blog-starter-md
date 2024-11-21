@@ -16,21 +16,21 @@ Using responder to see for events
 
 Once we launch the responder server
 
-![[/Untitled 538.png|Untitled 538.png]]
+![[Untitled 538.png|Untitled 538.png]]
 
 Then we use the LFI on the web application to try and get a resource, change it to RFI
 
-![[/Untitled 1 4.png|Untitled 1 4.png]]
+![[Untitled 1 4.png|Untitled 1 4.png]]
 
-![[/Untitled 2 4.png|Untitled 2 4.png]]
+![[Untitled 2 4.png|Untitled 2 4.png]]
 
-![[/Untitled 3 4.png|Untitled 3 4.png]]
+![[Untitled 3 4.png|Untitled 3 4.png]]
 
 Since Powershell is not installed by default in Linux, I have to use `evil-winrm`
 
 DESPUES DE ARREGLAR MIL COSAS CON OPENSSL
 
-![[/Untitled 4 4.png|Untitled 4 4.png]]
+![[Untitled 4 4.png|Untitled 4 4.png]]
 
   
 

@@ -4,7 +4,7 @@ This is a console multiplexor, it divides a single console in to various session
 
   
 
-![[/Untitled 554.png|Untitled 554.png]]
+![[Untitled 554.png|Untitled 554.png]]
 
 https://github.com/gpakosz/.tmux
 

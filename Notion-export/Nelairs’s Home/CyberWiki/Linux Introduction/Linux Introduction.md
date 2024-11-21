@@ -59,7 +59,7 @@ This would be great to have it in console, so this what this project is going to
 
 ### Project: Defying casino’s roulette
 
-![[/Untitled 21.png|Untitled 21.png]]
+![[Untitled 21.png|Untitled 21.png]]
 
 What we gonna do?
 

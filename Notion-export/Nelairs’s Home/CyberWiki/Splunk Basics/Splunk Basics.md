@@ -2,7 +2,7 @@
 
 Splunk has three main components, namely Forwarder, Indexer, and Search Head. These components are explained below:
 
-![[/Untitled 546.png|Untitled 546.png]]
+![[Untitled 546.png|Untitled 546.png]]
 
 ### Splunk Forwarder
 
@@ -13,23 +13,23 @@ Splunk Forwarder is a lightweight agent installed on the endpoint intended to be
 - Linux host generating host-centric logs.
 - Database generating DB connection requests, responses, and errors.
 
-![[/Untitled 1 12.png|Untitled 1 12.png]]
+![[Untitled 1 12.png|Untitled 1 12.png]]
 
 ### Splunk Indexer
 
 Splunk Indexer plays the main role in processing the data it receives from forwarders. It takes the data, normalizes it into field-value pairs, determines the datatype of the data, and stores them as events. Processed data is easy to search and analyze.
 
-![[/Untitled 2 10.png|Untitled 2 10.png]]
+![[Untitled 2 10.png|Untitled 2 10.png]]
 
 ### Splunk Search Head
 
 Splunk Search Head is the place within the Search & Reporting App where users can search the indexed logs as shown below. When the user searches for a term or uses a Search language known as Splunk Search Processing Language, the request is sent to the indexer and the relevant events are returned in the form of field-value pairs.
 
-![[/Untitled 3 10.png|Untitled 3 10.png]]
+![[Untitled 3 10.png|Untitled 3 10.png]]
 
 Search Head also provides the ability to transform the results into presentable tables, visualizations like pie-chart, bar-chart and column-chart, as shown below:
 
-![[/Untitled 4 10.png|Untitled 4 10.png]]
+![[Untitled 4 10.png|Untitled 4 10.png]]
 
   
 
@@ -41,14 +41,14 @@ Search Head also provides the ability to transform the results into presentable 
 
 When you access Splunk, you will see the default home screen identical to the screenshot bellow.
 
-![[/Untitled 5 8.png|Untitled 5 8.png]]
+![[Untitled 5 8.png|Untitled 5 8.png]]
 
 Looking at each section of the panel I can see  
   
 The  
 **TOP PANEL** which is the Splunk Bar
 
-![[/Untitled 6 7.png|Untitled 6 7.png]]
+![[Untitled 6 7.png|Untitled 6 7.png]]
 
 In the Splunk Bar, you can see system-level messages (Messages), configure the Splunk instance (Settings), review the progress of jobs (Activity), miscellaneous information such as tutorials (Help), and a search feature (Find).
 
@@ -56,7 +56,7 @@ In the Splunk Bar, you can see system-level messages (Messages), configure the S
 
 You can change between Splunk installed apps using the Splunk bar instead of the Apps Panel
 
-![[/Untitled 7 7.png|Untitled 7 7.png]]
+![[Untitled 7 7.png|Untitled 7 7.png]]
 
 ---
 
@@ -66,7 +66,7 @@ Next is the Apps Panel. In this panel, you can see the apps installed for the Sp
 
 The default app for every Splunk instance is Search & Reporting.
 
-![[/Untitled 8 7.png|Untitled 8 7.png]]
+![[Untitled 8 7.png|Untitled 8 7.png]]
 
 ---
 
@@ -74,7 +74,7 @@ The default app for every Splunk instance is Search & Reporting.
 
 The next section is Explore Splunk. This panel contains quick links to add data to the Splunk instance, add new Splunk apps, and access the Splunk documentation.
 
-![[/Untitled 9 6.png|Untitled 9 6.png]]
+![[Untitled 9 6.png|Untitled 9 6.png]]
 
 ---
 
@@ -102,13 +102,13 @@ The data sources can be event logs, website logs, firewall logs, etc.
 
 Data sources are grouped into categories. Below is a chart listing from the Splunk documentation detailing each data sourec category.
 
-![[/Untitled 10 5.png|Untitled 10 5.png]]
+![[Untitled 10 5.png|Untitled 10 5.png]]
 
 ### THM ROOM
 
 In this room, we are going to focus on VPN Logs. When we click on the **Add Data** link (from the Splunk home screen), we are presented with the following screen.
 
-![[/Untitled 11 5.png|Untitled 11 5.png]]
+![[Untitled 11 5.png|Untitled 11 5.png]]
 
 We will use the upload option to upload the data from your local machine.
 

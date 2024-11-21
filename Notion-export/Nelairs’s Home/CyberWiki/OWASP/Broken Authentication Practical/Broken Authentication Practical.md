@@ -2,15 +2,15 @@ Let's understand this with the help of an example, say there is an existing user
 
 ---
 
-![[/Untitled 567.png|Untitled 567.png]]
+![[Untitled 567.png|Untitled 567.png]]
 
   
 
-![[/Untitled 1 32.png|Untitled 1 32.png]]
+![[Untitled 1 32.png|Untitled 1 32.png]]
 
 The username “darren” was already in use, so i registered the username “ darren” with this being succesfull. Now we can try access the username “darren” with our “ darren” and our password “test1234”.
 
-![[/Untitled 2 25.png|Untitled 2 25.png]]
+![[Untitled 2 25.png|Untitled 2 25.png]]
 
 First flag!
 
@@ -18,8 +18,8 @@ First flag!
 
 Now we do the same for the username “arthur” with our username “ arthur” and “test1234” as our password.
 
-![[/Untitled 3 25.png|Untitled 3 25.png]]
+![[Untitled 3 25.png|Untitled 3 25.png]]
 
 Success! We have our second flag.
 
-![[/Untitled 4 25.png|Untitled 4 25.png]]
+![[Untitled 4 25.png|Untitled 4 25.png]]

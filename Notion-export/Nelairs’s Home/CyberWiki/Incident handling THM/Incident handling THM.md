@@ -68,7 +68,7 @@ When required, we will also utilize Open Source Intelligence (OSINT) and other f
 
   
 
-![[/Untitled 547.png|Untitled 547.png]]
+![[Untitled 547.png|Untitled 547.png]]
 
 - Reconnaissance
 - Weaponization
@@ -84,7 +84,7 @@ When required, we will also utilize Open Source Intelligence (OSINT) and other f
 
 A Big corporate organization **Wayne Enterprises** has recently faced a cyber-attack where the attackers broke into their network, found their way to their web server, and have successfully defaced their website **http://www.imreallynotbatman.com**. Their website is now showing the trademark of the attackers with the message **YOUR SITE HAS BEEN DEFACED** as shown below.
 
-![[/Untitled 1 13.png|Untitled 1 13.png]]
+![[Untitled 1 13.png|Untitled 1 13.png]]
 
 They have requested "**US**" to join them as a **Security Analyst** and help them investigate this cyber attack and find the root cause and all the attackers' activities within their network.
 
@@ -130,7 +130,7 @@ Reconnaissance is an attempt to discover and collect information about a target.
 
 We will start our analysis by examining any reconnaissance attempt against the webserver `imreallynotbatman.com`. From an analyst perspective, where do we first need to look? If we look at the available log sources, we will find some log sources covering the network traffic, which means all the inbound communication towards our web server will be logged into the log source that contains the web traffic. Let's start by searching for the domain in the search head and see which log source includes the traces of our domain.
 
-![[/Untitled 2 11.png|Untitled 2 11.png]]
+![[Untitled 2 11.png|Untitled 2 11.png]]
 
 Here we have searched for the term `imreallynotbatman.com` in the index `botsv1`. In the sourcetype field, we saw that the following log sources contain the traces of this search term.
 
@@ -151,7 +151,7 @@ Let us begin looking at the log source **stream:http**, which contains the http
 index=botsv1 imreallynotbatman.com sourcetype=stream:http
 ```
 
-![[/Untitled 3 11.png|Untitled 3 11.png]]
+![[Untitled 3 11.png|Untitled 3 11.png]]
 
 So far, we have found two IPs in the src_ip field `40.80.148.42` and `23.22.63.114`. The first IP seems to contain a high percentage of the logs as compared to the other IP, which could be the answer. If you want to confirm further, click on each IP one by one, it will be added into the search query, and look at the logs, and you will find the answer.
 
@@ -161,6 +161,6 @@ So far, we have found two IPs in the src_ip field `40.80.148.42` and `23.22.6
 
 So what do we need to do to validate the scanning attempt? Simple, dig further into the weblogs. Let us narrow down the result, look into the `suricata` logs, and see if any rule is triggered on this communication.
 
-![[/Untitled 4 11.png|Untitled 4 11.png]]
+![[Untitled 4 11.png|Untitled 4 11.png]]
 
 ### Exploitation Phase

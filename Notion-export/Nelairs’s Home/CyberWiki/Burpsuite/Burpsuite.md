@@ -13,7 +13,7 @@
     Abrir Burp rapido y disown  
       
     
-    ![[/Untitled 545.png|Untitled 545.png]]
+    ![[Untitled 545.png|Untitled 545.png]]
     
     ---
     
@@ -30,11 +30,11 @@ Install foxyproxy extension
 
 Click on the extension and then options
 
-![[/Untitled 1 11.png|Untitled 1 11.png]]
+![[Untitled 1 11.png|Untitled 1 11.png]]
 
 Click Add
 
-![[/Untitled 2 9.png|Untitled 2 9.png]]
+![[Untitled 2 9.png|Untitled 2 9.png]]
 
 Click on the "Add" button and fill in the following values:
 
@@ -42,7 +42,7 @@ Click on the "Add" button and fill in the following values:
 - Proxy IP: `127.0.0.1`
 - Port: `8080`
 
-![[/Untitled 3 9.png|Untitled 3 9.png]]
+![[Untitled 3 9.png|Untitled 3 9.png]]
 
 Now click "Save"
 
@@ -50,4 +50,4 @@ Now click "Save"
 
 When you click on the FoxyProxy icon at the top of the screen, you will see that that there is a configuration available for Burp:
 
-![[/Untitled 4 9.png|Untitled 4 9.png]]
+![[Untitled 4 9.png|Untitled 4 9.png]]

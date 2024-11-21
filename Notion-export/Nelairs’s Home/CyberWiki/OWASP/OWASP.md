@@ -102,7 +102,7 @@ Breaking down each OWASP topic and including details on what the vulnerability i
         
           
         
-        ![[/Untitled 544.png|Untitled 544.png]]
+        ![[Untitled 544.png|Untitled 544.png]]
         
           
         
@@ -112,7 +112,7 @@ Breaking down each OWASP topic and including details on what the vulnerability i
         
           
         
-        ![[/Untitled 1 10.png|Untitled 1 10.png]]
+        ![[Untitled 1 10.png|Untitled 1 10.png]]
         
           
         
@@ -121,7 +121,7 @@ Breaking down each OWASP topic and including details on what the vulnerability i
         
           
         
-        ![[/Untitled 2 8.png|Untitled 2 8.png]]
+        ![[Untitled 2 8.png|Untitled 2 8.png]]
         
           
         
@@ -131,7 +131,7 @@ Breaking down each OWASP topic and including details on what the vulnerability i
         
           
         
-        ![[/Untitled 3 8.png|Untitled 3 8.png]]
+        ![[Untitled 3 8.png|Untitled 3 8.png]]
         
           
         
@@ -153,7 +153,7 @@ Breaking down each OWASP topic and including details on what the vulnerability i
 
 - **XML External Entity**
     
-    ![[/Untitled 4 8.png|Untitled 4 8.png]]
+    ![[Untitled 4 8.png|Untitled 4 8.png]]
     
     An XML External Entity (XXE) attack is a vulnerability that abuses features of XML parsers/data. It often allows an attacker to interact with any backend or external systems that the application itself can access and can allow the attacker to read the file on that system. They can also cause Denial of Service (DoS) attack or could use XXE to perform Server-Side Request Forgery (SSRF) inducing the web application to make requests to other applications. XXE may even enable port scanning and lead to remote code execution.There are two types of XXE attacks: in-band and out-of-band (OOB-XXE).
     
@@ -285,7 +285,7 @@ Breaking down each OWASP topic and including details on what the vulnerability i
 
 - **Broken Access Control**
     
-    ![[/Untitled 5 7.png|Untitled 5 7.png]]
+    ![[Untitled 5 7.png|Untitled 5 7.png]]
     
     Websites have pages that are protected from regular visitors, for example only the site's admin user should be able to access a page to manage other users. If a website visitor is able to access the protected page/pages that they are not authorised to view, the access controls are broken.
     
@@ -326,7 +326,7 @@ Breaking down each OWASP topic and including details on what the vulnerability i
     
     - IDOR - Insecure Direct Object Reference
         
-        ![[/Untitled 6 6.png|Untitled 6 6.png]]
+        ![[Untitled 6 6.png|Untitled 6 6.png]]
         
         IDOR, or Insecure Direct Object Reference, is the act of exploiting a misconfiguration in the way user input is handled, to access resources you wouldn't ordinarily be able to access. IDOR is a type of access control vulnerability.
         
@@ -474,7 +474,7 @@ Breaking down each OWASP topic and including details on what the vulnerability i
         
         Say you have a password of "password123" from a program that needs to be stored in a database on another system. To travel across a network this string/output needs to be converted to binary. Of course, the password needs to be stored as "password123" and not its binary notation. Once this reaches the database, it is converted or deserialised back into "password123" so it can be stored.
         
-        ![[/Untitled 7 6.png|Untitled 7 6.png]]
+        ![[Untitled 7 6.png|Untitled 7 6.png]]
         
         ---
         
@@ -486,7 +486,7 @@ Breaking down each OWASP topic and including details on what the vulnerability i
         
     - Insecure Deserialization - Cookies
         
-        ![[/Untitled 8 6.png|Untitled 8 6.png]]
+        ![[Untitled 8 6.png|Untitled 8 6.png]]
         
         Cookies are an essential tool for modern websites to function. Tiny pieces of data, these are created by a website and stored on the user's computer.
         
@@ -508,29 +508,29 @@ Breaking down each OWASP topic and including details on what the vulnerability i
         
         - Insecure Deserialization - Cookies Practical
             
-            ![[/Untitled 9 5.png|Untitled 9 5.png]]
+            ![[Untitled 9 5.png|Untitled 9 5.png]]
             
             I’ll create an account
             
-            ![[/Untitled 10 4.png|Untitled 10 4.png]]
+            ![[Untitled 10 4.png|Untitled 10 4.png]]
             
             Once logged in
             
-            ![[/Untitled 11 4.png|Untitled 11 4.png]]
+            ![[Untitled 11 4.png|Untitled 11 4.png]]
             
             If i inspect the storage of the webpage
             
-            ![[/Untitled 12 4.png|Untitled 12 4.png]]
+            ![[Untitled 12 4.png|Untitled 12 4.png]]
             
             The password is encoded as plaintext, and i can see sessionId base64 encoded and some userType Cookie
             
             Decoding the base64 i found
             
-            ![[/Untitled 13 4.png|Untitled 13 4.png]]
+            ![[Untitled 13 4.png|Untitled 13 4.png]]
             
             So if i change the userType cookie to **admin** that means i’m an admin?
             
-            ![[/Untitled 14 4.png|Untitled 14 4.png]]
+            ![[Untitled 14 4.png|Untitled 14 4.png]]
             
             Yes, now i own an admins account.
             
@@ -538,15 +538,15 @@ Breaking down each OWASP topic and including details on what the vulnerability i
             
             Looking through cookies i found one that is generated by clicking “Exchange your VIM”
             
-            ![[/Untitled 15 4.png|Untitled 15 4.png]]
+            ![[Untitled 15 4.png|Untitled 15 4.png]]
             
             This is the snippet that creates the cookie
             
-            ![[/Untitled 16 4.png|Untitled 16 4.png]]
+            ![[Untitled 16 4.png|Untitled 16 4.png]]
             
             And this is how the cookie is retrieved or deserialized, as i can see the cookie is just being decoded, without cheeking if its safe.
             
-            ![[/Untitled 17 4.png|Untitled 17 4.png]]
+            ![[Untitled 17 4.png|Untitled 17 4.png]]
             
             This vulnerability exploits Python Pickle. We essentially have free reign to execute whatever we like such as a reverse shell.
             
@@ -554,19 +554,19 @@ Breaking down each OWASP topic and including details on what the vulnerability i
             
             So using this code that encodes some Python code to use sys lib and os calls
             
-            ![[/Untitled 18 4.png|Untitled 18 4.png]]
+            ![[Untitled 18 4.png|Untitled 18 4.png]]
             
             Executing the code it leaves with de b64 encoded
             
-            ![[/Untitled 19 4.png|Untitled 19 4.png]]
+            ![[Untitled 19 4.png|Untitled 19 4.png]]
             
             Now i change the cookie **encodedPayload** to use my encoded b64
             
-            ![[/Untitled 20 4.png|Untitled 20 4.png]]
+            ![[Untitled 20 4.png|Untitled 20 4.png]]
             
             Done! Reverse shell established
             
-            ![[/Untitled 21 4.png|Untitled 21 4.png]]
+            ![[Untitled 21 4.png|Untitled 21 4.png]]
             
               
             
@@ -589,20 +589,20 @@ Breaking down each OWASP topic and including details on what the vulnerability i
         
         Recall that since this is about known vulnerabilities, most of the work has already been done for us. Our main job is to find out the information of the software and research it until we can find an exploit. Let's go through that with an example web application.
         
-        ![[/Untitled 22 4.png|Untitled 22 4.png]]
+        ![[Untitled 22 4.png|Untitled 22 4.png]]
         
         What do you know, this server is using the default page for the nostromo web server. Now that we have a version number and a software name, we can use [exploit-db](https://www.exploit-db.com/)  
          to try and find an exploit for this particular version.  
         
-        ![[/Untitled 23 3.png|Untitled 23 3.png]]
+        ![[Untitled 23 3.png|Untitled 23 3.png]]
         
         It may not work the first time. It helps to have an understanding of the programming language that the script is in, so that if needed you can fix any bugs or make any modifications, as quite a few scripts on exploit-db expect you to make modifications.
         
-        ![[/Untitled 24 3.png|Untitled 24 3.png]]
+        ![[Untitled 24 3.png|Untitled 24 3.png]]
         
         Fortunately for us, the error was caused by a line that should have been commented on, so it's an easy fix.
         
-        ![[/Untitled 25 3.png|Untitled 25 3.png]]
+        ![[Untitled 25 3.png|Untitled 25 3.png]]
         
         Fixing that, let's try and rerun the program.
         
@@ -616,27 +616,27 @@ Breaking down each OWASP topic and including details on what the vulnerability i
         
         The following is a vulnerable application, all information you need to exploit it can be found online.
         
-        ![[/Untitled 26 3.png|Untitled 26 3.png]]
+        ![[Untitled 26 3.png|Untitled 26 3.png]]
         
         ---
         
         So the index of this site already gives me some information. This is a template from projectworlds and has a Admin Panel
         
-        ![[/Untitled 27 3.png|Untitled 27 3.png]]
+        ![[Untitled 27 3.png|Untitled 27 3.png]]
         
-        ![[/Untitled 28 3.png|Untitled 28 3.png]]
+        ![[Untitled 28 3.png|Untitled 28 3.png]]
         
         And looking through the project page we have default information like DB directory and admin credentials
         
-        ![[/Untitled 29 3.png|Untitled 29 3.png]]
+        ![[Untitled 29 3.png|Untitled 29 3.png]]
         
         Searching for /database i founded
         
-        ![[/Untitled 30 3.png|Untitled 30 3.png]]
+        ![[Untitled 30 3.png|Untitled 30 3.png]]
         
         So looking in exploitdb it looks like there is an exploit for ‘**Online Book Store 1.0’** and theres place for Unauthenticated RCE
         
-        ![[/Untitled 31 3.png|Untitled 31 3.png]]
+        ![[Untitled 31 3.png|Untitled 31 3.png]]
         
         The exploit its fairly simple.
         

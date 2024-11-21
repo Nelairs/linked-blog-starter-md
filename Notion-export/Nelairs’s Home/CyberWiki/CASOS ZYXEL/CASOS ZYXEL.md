@@ -123,7 +123,7 @@ Del mismo se puede resaltar la función que crea IPs random. El mismo por defaul
 
 ## IoCs
 
-![[/Untitled 543.png|Untitled 543.png]]
+![[Untitled 543.png|Untitled 543.png]]
 
 IPs encontradas que alojan el binario:
 
@@ -155,7 +155,7 @@ IPs encontradas que alojan el binario:
 
 En conclusión esta actividad se detectó desde hace más de 30 días atrás, en cuanto al impacto para PAE es mínimo, ya que no se utiliza tecnología de Zyxel.
 
-![[/Untitled 1 9.png|Untitled 1 9.png]]
+![[Untitled 1 9.png|Untitled 1 9.png]]
 
   
 Para resaltar se encontraron IPs de PAE las cuales no tenemos en la lista enviada por el equipo.  

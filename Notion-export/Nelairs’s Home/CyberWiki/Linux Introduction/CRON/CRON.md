@@ -9,7 +9,7 @@ Let’s make some examples for CRON and understanding its expresions
   
   
 
-![[/Untitled 559.png|Untitled 559.png]]
+![[Untitled 559.png|Untitled 559.png]]
 
 So, the basics of CRON is that it executes jobs at a determinated time, this time can be configured where the asterix are. Let’s take a deeper look for the configurations of time.
 
@@ -32,13 +32,13 @@ Besides this 4 common values we have the valid values which are from 0-59 (minut
     
     The most common one **Every minute**
     
-    ![[/Untitled 1 24.png|Untitled 1 24.png]]
+    ![[Untitled 1 24.png|Untitled 1 24.png]]
     
     ---
     
     Then, using only a number we have
     
-    ![[/Untitled 2 19.png|Untitled 2 19.png]]
+    ![[Untitled 2 19.png|Untitled 2 19.png]]
     
     This means that every hour at 1 minute this will exec
     
@@ -46,7 +46,7 @@ Besides this 4 common values we have the valid values which are from 0-59 (minut
     
     if we use the slash / we can define minutes intervals
     
-    ![[/Untitled 3 19.png|Untitled 3 19.png]]
+    ![[Untitled 3 19.png|Untitled 3 19.png]]
     
 
 ---
@@ -59,7 +59,7 @@ Besides the 4 common values there are also the valid values which are from 0-23 
     
     Here we use the hours space, so if we just put a number we got
     
-    ![[/Untitled 4 19.png|Untitled 4 19.png]]
+    ![[Untitled 4 19.png|Untitled 4 19.png]]
     
     This because we only specify a number in the hours space
     
@@ -67,15 +67,15 @@ Besides the 4 common values there are also the valid values which are from 0-23 
     
     Using the minutes we have a specific hour in the day
     
-    ![[/Untitled 5 14.png|Untitled 5 14.png]]
+    ![[Untitled 5 14.png|Untitled 5 14.png]]
     
     ---
     
     Here using slash
     
-    ![[/Untitled 6 12.png|Untitled 6 12.png]]
+    ![[Untitled 6 12.png|Untitled 6 12.png]]
     
-    ![[/Untitled 7 12.png|Untitled 7 12.png]]
+    ![[Untitled 7 12.png|Untitled 7 12.png]]
     
 
 ---

@@ -101,7 +101,7 @@ This leads me to the permissions, which are the letter in the first column of th
 
 ==`drwxr-xr-x`==
 
-![[/Untitled 548.png|Untitled 548.png]]
+![[Untitled 548.png|Untitled 548.png]]
 
 As seen, the first dash shows the file type
 
@@ -112,4 +112,4 @@ A good form of setting or remembering the permissions is in **binary** or knowin
   
   
 
-![[/Untitled 1 14.png|Untitled 1 14.png]]
+![[Untitled 1 14.png|Untitled 1 14.png]]

@@ -14,11 +14,11 @@ For start typing you need to press I as **Insert
   
 **
 
-![[/Untitled 557.png|Untitled 557.png]]
+![[Untitled 557.png|Untitled 557.png]]
 
 And now you can begin typing
 
-![[/Untitled 1 22.png|Untitled 1 22.png]]
+![[Untitled 1 22.png|Untitled 1 22.png]]
 
 To UNDO something as Ctrl + Z would do, you have to use Alt + U
 
@@ -40,7 +40,7 @@ In VISUAL mode pressing V, you can select a string and pressing Y you copy the s
 
 Now the macros are created to automatize some task, so in this case lets make an example deleting the users in /etc/passwd file
 
-![[/Untitled 2 17.png|Untitled 2 17.png]]
+![[Untitled 2 17.png|Untitled 2 17.png]]
 
 To delete you’ll use ‘d’ then ‘j’ to go down one line and ‘dot’ to repeat the action delete
 
@@ -48,7 +48,7 @@ But in this case let’s a MACRO
 
 To record a macro youll press ‘q’ then (for example) ‘a’ and youll start recording a macro
 
-![[/Untitled 3 17.png|Untitled 3 17.png]]
+![[Untitled 3 17.png|Untitled 3 17.png]]
 
 Now every command you make will be recorded, so lets record the command to delete and go down one line
 
@@ -56,6 +56,6 @@ This would be like, start recording macro ‘q’ → ‘a’ then record the st
 
 Now to execute it use `31 @ a` to execute it 31 times
 
-![[/Untitled 4 17.png|Untitled 4 17.png]]
+![[Untitled 4 17.png|Untitled 4 17.png]]
 
-![[/Untitled 5 12.png|Untitled 5 12.png]]
+![[Untitled 5 12.png|Untitled 5 12.png]]

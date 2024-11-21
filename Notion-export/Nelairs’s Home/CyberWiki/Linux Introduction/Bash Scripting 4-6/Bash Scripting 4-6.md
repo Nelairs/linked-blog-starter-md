@@ -6,6 +6,6 @@ In this episode, the most important feature was the filter for difficulty, it fi
 
   
 
-![[/Untitled 563.png|Untitled 563.png]]
+![[Untitled 563.png|Untitled 563.png]]
 
-![[/Untitled 1 28.png|Untitled 1 28.png]]
+![[Untitled 1 28.png|Untitled 1 28.png]]

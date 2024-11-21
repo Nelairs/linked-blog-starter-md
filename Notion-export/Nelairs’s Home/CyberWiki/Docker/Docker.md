@@ -43,11 +43,11 @@ docker build -t my_first_image .
 
 This using the last example would use ubuntu image in the latest version
 
-![[/Untitled 19.png|Untitled 19.png]]
+![[Untitled 19.png|Untitled 19.png]]
 
 To see the images we use `docker images`
 
-![[/Untitled 1 2.png|Untitled 1 2.png]]
+![[Untitled 1 2.png|Untitled 1 2.png]]
 
 We can pull images from the repository using `docker pull debian:latest`
 
@@ -70,13 +70,13 @@ Using `docker run` Ill specify with some parameters how i want my container to b
 
 Now with `docker ps` we can list our container that are deployed
 
-![[/Untitled 2 2.png|Untitled 2 2.png]]
+![[Untitled 2 2.png|Untitled 2 2.png]]
 
 ### To connect
 
 We need to use `docker exec -it myContainer bash`
 
-![[/Untitled 3 2.png|Untitled 3 2.png]]
+![[Untitled 3 2.png|Untitled 3 2.png]]
 
 ---
 
@@ -96,7 +96,7 @@ This new file will make an image with the specified tools already installed
 
 Now using `docker build -t my_first_image:v2 .` i can build the new image with v2 tag usign the new configuration
 
-![[/Untitled 4 2.png|Untitled 4 2.png]]
+![[Untitled 4 2.png|Untitled 4 2.png]]
 
 Now `docker run -dit --name mySecondContainer my_first_image:v2`
 
@@ -138,7 +138,7 @@ ENTRYPOINT service apache2 start && /bin/bash
 
 `docker run -dit -p 80:80 --name myWebserver webserver`
 
-![[/Untitled 5 2.png|Untitled 5 2.png]]
+![[Untitled 5 2.png|Untitled 5 2.png]]
 
 Now we have a webserver deployed and forwarded via host IP
 

