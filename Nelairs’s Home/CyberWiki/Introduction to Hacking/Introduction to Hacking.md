@@ -5550,4 +5550,68 @@ The search of opcodes to enter the ESP register and load the shellcode is a tech
 	If this is correct, we will be jumping to the ESP where our shellcode is located
 	![[Pasted image 20241122162608.png]]
 	Now, at first this is not interpretated by the program since we need to allocate some space for this shellcode to be executed.
+
+---
+## NOPs usage, stack displacement and shellcode interpretation to achieve RCE
+
+Once we found the address of the opcode that applies the jump to the ESP, it is possible that the shellcode does not get interpretated by the objective program since the execution of this code needs more time than the available until the next instruction.
+
+To solve this problem some techniques such as using NOPs (Non Operable Instructions) before the shellcode are used. The NOPS do not make any operation, but buys us some time so the processor can execute the shellcode before the next instruction.
+
+Another technique sometimes used is the stack displacement, which implies the modification of the ESP register to allocate more space than needed for the shellcode and by that allowing the execution of the program without any problem. For example, we can use the 'sub esp, 0x10' to displace the ESP register 16 bytes down the stack and reserve the aditional space for the shellcode.
+
+With all these acomplished, we would have acomplished a succesful buffer overflow.
+
+---
+- PoC
+	So since the shellcode we are using is larger than the time available, we need to make some time so the processor can execute this shellcode.
+
+	So the two technique are NOPS and stack displacement
+
+	Let's begin with the usage of NOPS
+	In this case we are using 16 NOPS as a test
+	![[Pasted image 20241124145304.png]]
+	And now if we execute our exploit
+	![[Pasted image 20241124145444.png]]
+	We have access to the victim machine
+
+	If we do not want to use NOPS, we can use the technique of stack displacement
+
+	In the next example we are displacing the stack by 16 bytes
+	using nasm shell by metasploit we can search for the opcode instruction
+	![[Pasted image 20241124145707.png]]
+	![[Pasted image 20241124145721.png]]
+	And we have the same output as using NOPS
+
+---
+## Shellcode modification to control the desired RCE
+
+In addition to the payloads used in the previous lessons, we can also use payloads such as "windows/exec" to directly load an specific command that we wish to be executed on the CMD variable of the payload. This allow us to create a new shellcode that, when interpreted it will execute our command.
+
+The "windows/exec" payload, is a metasploit payload that allows us to execute an arbitrary command in the objective machine. This payload requires an specific command to be executed via CMD variable. By generating the payload with msfvenom, we can use the parameter "-p windows/exec CMD=\<command\>" to specify the desired command.
+
+Once generated, we can exploit the buffer overflow to execute our desired command into the objective machine.
+
+---
+- PoC
+	In this case we are going to try another way to gain access to the machine
+	So we are going to use the resource nishang to spawn a shell
+	https://github.com/samratashok/nishang
+
+	As shellcode we are going to use the following
+	![[Pasted image 20241124152502.png]]
+	We need to download the raw script and rename it as PS.ps1
+	![[Pasted image 20241124152953.png]]
+	Now since we share that PS.ps1 script, the objective machine should download it and execute it, and with rlwrap we should have a reverse powershell.
+	![[Pasted image 20241124153142.png]]
+
+---
+## Exploiting a new binary to reinforce knowledge
+
+With the objective of reinforcing the knowledge, in this lesson we will try to exploit another buffer overflow. The procedure will be the same with the change in the initial phase.
+
+This is the machine that we will be using:
+- **MiniShare**: [https://es.osdn.net/projects/sfnet_minishare/downloads/OldFiles/minishare-1.4.1.exe/](https://es.osdn.net/projects/sfnet_minishare/downloads/OldFiles/minishare-1.4.1.exe/)
+---
+- PoC
 	

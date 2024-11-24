@@ -194,7 +194,7 @@ It is using python
 
 ![[Untitled 35 2.png|Untitled 35 2.png]]
 
-The file is uploaded to http://<serverIP>/uploads/<filename>
+The file is uploaded to http://\<serverIP\>/uploads/\<filename\>
 
 ![[Untitled 36 2.png|Untitled 36 2.png]]
 
@@ -234,7 +234,7 @@ Now the binary appears in GTFO
 
 > [!info] julia | GTFOBins  
 > It can be used to break out from restricted environments by spawning an interactive system shell.  
-> [https://gtfobins.github.io/gtfobins/julia/#suid](https://gtfobins.github.io/gtfobins/julia/#suid)  
+\> [https://gtfobins.github.io/gtfobins/julia/#suid](https://gtfobins.github.io/gtfobins/julia/#suid)  
 
 ![[Untitled 41 2.png|Untitled 41 2.png]]
 
@@ -341,7 +341,7 @@ And in our machine using nc listen for the conection
 
 ![[Untitled 62 2.png|Untitled 62 2.png]]
 
-## EN ESTE CASO MIRE WRITEUP YA QUE NO ENCTRABA NADA, AL PARECER ENUMERANDO /ETC/FSTAB SE ENCUENTRAN CREDENCIALES EN TEXTO PLANO
+EN ESTE CASO MIRE WRITEUP YA QUE NO ENCTRABA NADA, AL PARECER ENUMERANDO /ETC/FSTAB SE ENCUENTRAN CREDENCIALES EN TEXTO PLANO
 
 In the fstab file located in /etc there is plaintext credentials
 
@@ -886,3 +886,48 @@ In the dev DB there some user and hashes
 ![[Untitled 148 2.png|Untitled 148 2.png]]
 
 ![[Untitled 149 2.png|Untitled 149 2.png]]
+### Cicada✅ 
+![[Pasted image 20241124161403.png]]
+Once enumerated we have this services exposed
+![[Pasted image 20241124163214.png]]
+Using smbclient found this 
+![[Pasted image 20241124163249.png]]
+Using the HR resource found this note
+![[Pasted image 20241124163430.png]]
+So we have a password for a user, now we can try a password spray
+Then using netexec I bruteforced the usernames by RID
+![[Pasted image 20241124164609.png]]
+Then extracted the usernames usign `grep -oP 'CICADA\\\K[^\s(]+' smb_output.txt
+ `
+ ![[Pasted image 20241124164714.png]]
+  Now we have users and a valid password
+  ![[Pasted image 20241124165524.png]]
+  The password belongs to michael.wrightson
+  Enumerating users i found that david.orelious has the password as description.
+  ![[Pasted image 20241124165700.png]]
+  Using smbmap and the user david.orelious we have a new resource available
+  ![[Pasted image 20241124170219.png]]
+  ![[Pasted image 20241124170756.png]]
+  I found a password inside the script, with this password I listed the resources with smbmap
+  ![[Pasted image 20241124171038.png]]
+  Looking through didnt found anything useful, so I used evil-winrm to get a shell
+  ![[Pasted image 20241124171547.png]]
+We have the user flag
+![[Pasted image 20241124171732.png]]
+
+Now we need to escalate privs, so i look at what privileges do I have as the current user
+![[Pasted image 20241124172559.png]]
+Using hacktricks i found some ways to exploit this
+https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/privilege-escalation-abusing-tokens#sebackupprivilege
+
+And i will use this resource
+
+https://raw.githubusercontent.com/Hackplayers/PsCabesha-tools/refs/heads/master/Privesc/Acl-FullControl.ps1
+
+How to download a file from cmd windows
+https://www.ired.team/offensive-security/defense-evasion/downloading-file-with-certutil
+
+Remember the dot before exec an ps1
+![[Pasted image 20241124173922.png]]
+![[Pasted image 20241124174034.png]]
+Got the root flag
