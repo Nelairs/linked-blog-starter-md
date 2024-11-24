@@ -5511,3 +5511,43 @@ These characters are represented in the ESP stack, this is where we are going to
 ---
 ## OpCodes search to enter the ESP and load our Shellcode
 
+Once the malicious shellcode is generated and the badchars excluded, the next step is to make flow of our malicious program to fit inside the shellcode. The idea is that the EIP register points to another memory address where the **opcode** is applied and make a jump to the ESP register (JMP ESP), where the shellcode is located. This is done this way since we cannot make the EIP register to point to our shellcode directly.
+
+To find the JMP ESP opcode, we can use various set of tools like mona.py, which allows us to find specific opcodes in specific modules of the objective program. Once found, we can overwrite the value of the EIP register with the address of the memory where the opcode is stored, what will allow us to jump to the ESP register and execute the malicious shellcode.
+
+The search of opcodes to enter the ESP register and load the shellcode is a technique used to force the program flow to execute the shellcode. We used the JMP ESP opcode to jump to the memory address of the ESP register where shellcode is located.
+
+---
+- PoC
+	As first step we will be using **msfvenom** to create the shellcode payload
+	 ![[Pasted image 20241122161536.png]]
+	 Now here we are using a variety of options
+	 - --platform: indicates the OS
+	 - -p indicates which payload to use
+	 - -a indicates the system's architecture
+	 - LHOST and LPORT are from which machine we will be listening for the connection
+	 - -f is the output (in this case c)
+	 - -e is the encoder used (in this case we use the polymorphic shikata ga nai )
+	 - -b to explude the badchars
+	 - EXITFUNC is used to create a child procces and kill this proccess and not the parent, so we can have access another time
+	Now this shellcode is used in our payload, as this
+	![[Pasted image 20241122161932.png]]
+	Perfect, at this point we are almost set, we need now the address for the JMP ESP optcode, and how do we find it?
+	
+	We will be using mona again to find dll or a program that do not have protections
+	![[Pasted image 20241122162102.png]]
+	We need a program that do not has the protections set as true
+	Now using metasploit again we search for the optcode of the JMP ESP instruction, which in this case is \0xFF\0xE4
+	![[Pasted image 20241122162223.png]]
+	Now using mona, we search for that optcode in the module we selected
+	![[Pasted image 20241122162318.png]]
+	And we need to use an address that DO NOT contains a badchar (in this case 00 0a 0d)
+	Perfect, we have our optcode for the EIP
+	Now lets use it in the exploit, which it need to be representated as Littleendian
+	![[Pasted image 20241122162441.png]]
+	Using Inmunity Debugger we can see that the EIP's value now is the addres of the optcode JMP ESP
+	![[Pasted image 20241122162534.png]]
+	If this is correct, we will be jumping to the ESP where our shellcode is located
+	![[Pasted image 20241122162608.png]]
+	Now, at first this is not interpretated by the program since we need to allocate some space for this shellcode to be executed.
+	
