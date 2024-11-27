@@ -94,13 +94,9 @@ A self-made wiki with knowledge acquired during my career
 
 [[LaTex Presentation]]
 
-[[Pentest exec report]]
-
 [[Docker]]
 
 [[Interesante]]
-
-[[Documentacion ASA]]
 
 ---
 
