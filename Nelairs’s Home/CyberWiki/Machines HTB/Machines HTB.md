@@ -931,9 +931,3 @@ Remember the dot before exec an ps1
 ![[Pasted image 20241124173922.png]]
 ![[Pasted image 20241124174034.png]]
 Got the root flag
-
-
-
-Hagamos una prueba
-
-Hola SOC, estoy desde la notebook sincronizando a GIT
