@@ -5614,4 +5614,34 @@ This is the machine that we will be using:
 - **MiniShare**: [https://es.osdn.net/projects/sfnet_minishare/downloads/OldFiles/minishare-1.4.1.exe/](https://es.osdn.net/projects/sfnet_minishare/downloads/OldFiles/minishare-1.4.1.exe/)
 ---
 - PoC
-	
+	For this lesson we are installing a vulnerable version of MiniShare
+	![[Pasted image 20241126122824.png]]
+	This is a HTTP service
+
+	We begin with the python3 script
+	So the base of this vulnerability, relies in the URL input, so we should start trying this way
+	So in the first steps of the script we should try and find how much characters we need to crash the program
+
+	The script send queries of 100 bytes until we found how much crash the program
+	![[Pasted image 20241126130307.png]]
+	This is the amount we found that crash the program
+	![[Pasted image 20241126130200.png]]
+	So now we need to make a fine tune, and we can use metasploit pattern creator
+	![[Pasted image 20241126130326.png]]
+	Now we use this pattern in our script
+	![[Pasted image 20241126130506.png]]
+	Once we send the pattern, we can see which was the pattern that crashed our program
+	![[Pasted image 20241126131321.png]]
+	And using metasploit pattern offset, we can search for the exact number of characters
+	![[Pasted image 20241126131413.png]]
+	Now since we have the offset, we need to try if we have the capacity of controlling the EIP
+	![[Pasted image 20241126131532.png]]
+	If we are able to control the EIP we shall see 0x42424242 in the EIP address
+	![[Pasted image 20241126131615.png]]
+	And yes, we now control the EIP
+	Now we need to check for the badchars
+	So we will send some C's  to see where they are loaded in the stack
+	![[Pasted image 20241126131715.png]]
+	As we can see, again our chain if at the beggining of the stack
+	![[Pasted image 20241126131830.png]]
+	Perfect, now we need to build our bytearray, as first badchar we shall include 0x00, since the null byte 
