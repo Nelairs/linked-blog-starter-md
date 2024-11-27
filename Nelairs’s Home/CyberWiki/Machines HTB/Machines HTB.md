@@ -935,3 +935,5 @@ Got the root flag
 
 
 Hagamos una prueba
+
+Hola SOC, estoy desde la notebook sincronizando a GIT
