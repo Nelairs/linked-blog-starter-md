@@ -5644,4 +5644,42 @@ This is the machine that we will be using:
 	![[Pasted image 20241126131715.png]]
 	As we can see, again our chain if at the beggining of the stack
 	![[Pasted image 20241126131830.png]]
-	Perfect, now we need to build our bytearray, as first badchar we shall include 0x00, since the null byte 
+	Perfect, now we need to build our bytearray, as first badchar we shall include 0x00, since the null byte.
+	Using Mona again, !mona bytearray -cpb '\x00'
+	![[Pasted image 20241127174638.png]]
+	Perfect, lets transfer this bytearray to pur machine with smb
+	![[Pasted image 20241127174830.png]]
+	![[Pasted image 20241127174844.png]]
+	Now lets use it in our exploit
+	![[Pasted image 20241127175014.png]]
+	Now we need to compare to see if there is another badchar until we dont find another one.
+	So using mona compare
+	![[Pasted image 20241127175232.png]]
+	So now if there no more badchars, we can continue with the exploit.
+	The next step is to find the JMP ESP Opcode and create our shellcode
+	So again using msfvenom we create our shellcode
+	![[Pasted image 20241127175645.png]]
+	We use this shellcode in our script
+	![[Pasted image 20241127175744.png]]
+	Remember the NOPS before the shellcode
+	
+	And lets find our opcode
+
+	![[Pasted image 20241127175810.png]]
+	Remember that this is the address of our opcode
+	In this example we have only one binary 
+	![[Pasted image 20241127175847.png]]
+	In this case we couldnt find anything
+	![[Pasted image 20241127175940.png]]
+	So we need to use another tool of mona, mona findwild
+	![[Pasted image 20241127180023.png]]
+	Remember to use an address that do not contains the badchars
+
+	![[Pasted image 20241127180057.png]]
+	Now we have the opcode to jump to the ESP
+	If we did everything well, we should have a reverse shell
+
+	![[Pasted image 20241127180139.png]]
+
+---
+## Working and manual creation of Shellcodes
