@@ -5682,4 +5682,66 @@ This is the machine that we will be using:
 	![[Pasted image 20241127180139.png]]
 
 ---
-## Working and manual creation of Shellcodes
+## Manual creation of Shellcodes and how do they work
+The shellcodes are small and highly optimized programs that are used to exploit security vulnerabilities and execute malicious code in an objective machine. The shellcode are usually written in assembly code to guarantee a quick and efficient execution.
+
+In the next lesson, we will be exploring how do shellcode works by creating them manually. E.g. we will be trying to create a shellcode that show a "Hello World" message in the console using system interruptions. Likewise, we will try to execute a system level call to execute a command.
+
+Once the compiled code is generated, we can use the **objdump** to convert the binary to a shellcode that can be used in a buffer overflow.
+
+---
+- Poc
+	Let's create a Linux Binary ELF to see what is going on in there
+	![[Pasted image 20241128102940.png]]
+	Perfec, now let's see it raw
+	![[Pasted image 20241128103024.png]]
+	As seen, what is going on is this one liner `/bin/sh -c 'echo Hola mundo'` 
+	But this is not machine code, to see at low level we need to look at the assembly code
+	![[Pasted image 20241128104102.png]]
+	Using disasm
+	![[Pasted image 20241128104128.png]]
+	The highlighted line is the instruction for a system interruption
+	This are the Linux instructions values for low level programming.
+	![[Pasted image 20241128112914.png]]
+	
+	So next, let's create our hello world written in assembly
+	![[Pasted image 20241128112204.png]]
+	As seen is more complicated, since this is low level programming, lets explain line by line
+	- Line 6. mov eax, 4: This line sets the eax address with the value 4 that is sys_write, since this the system call identifier.
+	- Line 10. mov ebx, 1:  This line sets ebx addres with the value 1 that is stdout. This is used as the first argument of the write() instruction.
+	- Line 11-13. push 0xAABBCCDD: This are the character in hexadecimal and in Little Endian (LE) since we are working in 32 bits systems.
+	- Line 14. mov ecx, esp: This line moves the value of esp to ecx, esp has the stack values that we pushed in the previous lines, so this values are used by the second argument of write() instruction.
+	- Line 15. mov edx, 11: In this line we set the value of edx to 11 which is the length of our chain of characters, and this is the 3rd and last argument for the write() instruction.
+	- Line 17. int 80h: As the last line, this is the system interruption, this interruptions read the value of eax to see which identifier is being used, in this case the value 4, for sys_write, write()
+
+	This is the code output
+	![[Pasted image 20241128114101.png]]
+	As we can see it is working, but we have the segmentation fault warning, this is because, since we are at the top of the stack pushing instructions and the EIP do not knows where to point at the end of the code
+	So to fix this, we need to call another interruption and pass the value of the exit() instruction
+	![[Pasted image 20241128120644.png]]
+	![[Pasted image 20241128120656.png]]
+	This using objdump
+	![[Pasted image 20241128120722.png]]
+	Now filtering some things
+	![[Pasted image 20241128120749.png]]
+	This looks much more like a shellcode
+	![[Pasted image 20241128120819.png]]
+	Now we need separate the pairs with \x so we have the \x00 chars
+	Using this bash oneliner `printf '\\x' && objdump -d <asm_final_code> | grep "^ " | cut -f2 | tr -d ' ' | tr -d '\n' | sed 's/.\{2\}/&\\x /g' | head -c-3 | tr -d ' '; echo`
+	![[Pasted image 20241128121050.png]]
+	We have our first manual shellcode that says HelloWorld
+
+	This obviously has bad chars, isnt encoded and is more dificult than using msfvenom
+	
+	---
+	Let try another one that executes a command
+	![[Pasted image 20241128122843.png]]
+	- Line 6. mov eax, 11: This sets the value of eax to 11, which is the identifier of the sys_execve system call
+	- Line 7-9. push 0xaabbccdd: This lines sets the values of the characters used for the line /bin//sh
+	- Line 11. mov ebx, esp: Indicates to ebx where values are, ebx is used as argument for the execve() instruction
+	- Line 12-13. xor:  makes an xor with values that set the addresses to 0, this are also arguments for execve() instruction
+	- Line 15. int 80h: System interruption that read eax value
+
+	Lets generate the final shellcode
+	![[Pasted image 20241128123319.png]]
+	
