@@ -5744,4 +5744,41 @@ Once the compiled code is generated, we can use the **objdump** to convert the b
 
 	Lets generate the final shellcode
 	![[Pasted image 20241128123319.png]]
+
+---
+# Additional Information
+## Metasploit Introduction
+
+Metasploit is a penetration testing framework that is used to carry out security test in applications and systems. This framework is widely used by security investigators to find vulnerabilities and perform exploitation tests of the vulnerabilities found. Metasploit is based in a set of security tools that includes an exploit development framework, a vulnerability DB and a collection of modules to exploit different vulnerabilities.
+
+In practical terms, Metasploit is used to test the security of a system or an application by performing a penetration testing exercise with the objective of identifying and exploiting these security vulnerabilities. To do this, Metasploit provides us a wide variety of exploits, payloads and post-exploitation modules that can be used by security professionals to identify vulnerabilities and exploit them. By using Metasploit we can simulate real attack scenarios to fix these issues and harden the security of the systems.
+
+---
+- PoC
+	To run metasploit we usually use `msfdb run` if its the first time we execute the tool
+
+	It is advised to use the workspaces so we can organize the information
+	![[Pasted image 20241203151440.png]]
+	
+	Use search for looking for tools inside metasploit
+	![[Pasted image 20241203151330.png]]
+
+	So in this case we are making an example with an exploit for SLMail, like we did at low level with the buffer overflow lessons.
+	![[Pasted image 20241203164557.png]]
+
+	All the exploits have their options, and we need to configure the required ones
+	![[Pasted image 20241203170652.png]]
+
+	Exploiting is easy as using the command `exploit` to run it
+	![[Pasted image 20241203170947.png]]
+	
+	And as easy we have exploited the SLMail vulnerability and we have a meterpreter session
+
+	Using `hashdump` to connect using the NT hash
+	![[Pasted image 20241203171342.png]]
+
+	Using creds_all and mimikatz
+	
+	![[Pasted image 20241203171511.png]]
+
 	
