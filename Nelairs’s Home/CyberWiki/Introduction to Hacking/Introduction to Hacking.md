@@ -370,7 +370,7 @@ So we can create this one-liner
 
 ---
 
-# Host discovery ARP & ICMP
+## Host discovery ARP & ICMP
 
 This is the same principle as in previous, we need to have alternatives
 
@@ -794,7 +794,6 @@ magescantool
 
 ---
 
-# Basic concepts of enumeration & exploit
 
 # Vulnerabilities exploitation intro
 
@@ -5781,4 +5780,71 @@ In practical terms, Metasploit is used to test the security of a system or an ap
 	
 	![[Pasted image 20241203171511.png]]
 
-	
+
+---
+## SQLMap Introduction
+
+SQLMap is a penetration testing tool that is used to detect and exploit SQLi vulnerabilities in web apps. This tool is based in a highly automated SQLi engine that can detect and exploit a wide variety of vulnerabilities in different SQL Managing system RDBMS.
+
+SQLMap is used to test the security of webapps that use databases by identifying and exploiting these vulnerabilities. To make this, SQLMap carries out an automated crawling of the application, identifies the different vulnerabilities if there is any and then exploits them. The dumped information could have usernames, passwords  and any other confidential information that may be used by a malicious actor to compromise the security of the application.
+
+By using SQLMap, the security professionals may identify and fix the different SQLi vulnerabilities in their applications, this allows to significantly improve the security.
+
+---
+- PoC
+	As for now, we were exploiting SQLi manually, so we need to take a look to the automated tool, SQLMap.
+	This tool automates everything and tries everything.
+
+	So for this lesson we'll be using the machine Darkhole 2 from Vulnhub.
+
+	![[Pasted image 20241205152926.png]]
+	This machine has de port 80 opened.
+	![[Pasted image 20241205152955.png]]
+	This what we found using nmap enumeration
+	![[Pasted image 20241205153054.png]]
+	So, downloading everything with `wget -r http://<ip>/.git/`
+	![[Pasted image 20241205153138.png]]
+	Using the logs from the commit
+	![[Pasted image 20241205153235.png]]
+	So lets try with SQLMap
+	![[Pasted image 20241205153641.png]]
+	![[Pasted image 20241205153659.png]]
+
+---
+## Pivoting Introduction
+
+The pivoting, also known as "hopping", is a technique used in penetration testing exercises and in the analysis of networks, that implies the usage of a compromised machine to attack other machines in a same network.
+
+For example, if an attacker compromises a machine, it could use pivoting techniques to use this machine as a hoping point to try and exploit another actives on the network. This is done by using and creating tunnels from the compromised machine to the other machines on the network.
+
+The pivoting can be used to surpass security restrictions that in other way will prevent us from access another machines. For example, if a corporative network uses network segmentation to separate different networks, the pivoting is used to surpass these restrictions and allow the attacker to jump from a network to another.
+
+In this lesson we will be looking how to deploy a lab with different machines connected by using different networks with the objective of developing this needed skill. This lesson is crucial to approve the **eCPPTv2** certification.
+
+There is also some tips and tricks to face the exam, how to represent the info gathered using obsidian.
+
+---
+- PoC
+
+	https://youtu.be/Q7UeWILja-g?si=cKm-k8sovx3Htxje
+
+---
+# Creation redaction of reports 
+
+## Creating a professional LaTex report
+
+In these lessons we'll learn how to use LaTex, a markup language used to create high quality technical and scientific documentation. By the usage of example and practical exercises we will show how to use LaTex to create well structured documentation with professional appereance and a tipographic precision.
+
+---
+We need to install `latexmk zathura texlive-full`
+
+And the configure `xdg-mime query default application/pdf` and `xdg-mime default zathura.desktop application/pdf`
+
+We also need to create the `latexmkrc` files for both root and non-priv user, at this point is useful to create one file and the other be an symlink `ln -s -f <path> <symbolicfile>`
+
+This a base for our first doc
+![[Pasted image 20241205173433.png]]
+Now to compile the doc and previsualize it we do a `latexmk -pdf <doc>.tex -pvc`
+This opens a new window where we previsualize the document
+![[Pasted image 20241205173626.png]]
+![[Pasted image 20241205175255.png]]
