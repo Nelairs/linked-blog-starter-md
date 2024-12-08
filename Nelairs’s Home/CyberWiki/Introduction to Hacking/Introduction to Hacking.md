@@ -5829,7 +5829,7 @@ There is also some tips and tricks to face the exam, how to represent the info g
 	https://youtu.be/Q7UeWILja-g?si=cKm-k8sovx3Htxje
 
 ---
-# Creation redaction of reports 
+# Creation & redaction of reports 
 
 ## Creating a professional LaTex report
 
