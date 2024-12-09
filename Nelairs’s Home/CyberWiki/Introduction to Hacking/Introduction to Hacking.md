@@ -5848,3 +5848,4 @@ Now to compile the doc and previsualize it we do a `latexmk -pdf <doc>.tex -pvc`
 This opens a new window where we previsualize the document
 ![[Pasted image 20241205173626.png]]
 ![[Pasted image 20241205175255.png]]
+![[Pasted image 20241209120736.png]]
