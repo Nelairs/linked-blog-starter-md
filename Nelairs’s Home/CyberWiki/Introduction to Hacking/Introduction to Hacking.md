@@ -2099,8 +2099,6 @@ Typically, CSTI has to be derived to a XSS or RCE.
 
 A Padding Oracle Attack is a type of attack that is focused in cyphered data, this allows the attacker to de-cypher the content without knowing the key.
 
-  
-
 An oracle makes reference to an “indication” that lets the attacker to see if what he is doing is right or no. Imagine that you are playing a table game: the face of your opponent brightens up when he knows that he has a good hand. That is an oracle, in this case, as opponent, we can use this oracle to plan our next move.
 
 The padding is a specific cryptographic term. Some cyphers, which are the algorithms that are used to cypher data, work in blocks of data in which every block has a fixed data length. If the data that you wish to cypher is larger than the adequate length, the data is filled automatically until they fit. Many ways of padding require this, even if the length was appropriate. This allows the padding to always be stripped out safely after the cypher.
@@ -2111,19 +2109,11 @@ Combining these two elements, a padding oracle software implementation reveals i
 
 The block-based cyphers have another property denominated “mode”, this property determines the relation of the data in the first block with the data in the second block, successively. One of the most used modes is **CBC.** CBC presents a random initial block, known as “Initialization Vector” (IV) and combines the previous block with the result of the static cypher with the goal that every message with the same key does not generates the same output.
 
-  
-
 An attacker can use a padding oracle in combination with the way CBC structures the data, to send slightly modified messages to the code that exposes the oracle until the oracle says it is correct. With this answer the attacker could de-cypher the message byte by byte.
-
-  
 
 The quality in the networks is so high that an attacker could detect small differences (less than 0,1ms) in execution time. The applications that assume that a correct de-cypher only can happen when the data is not altered could be vulnerable to attacks with use of tools that are designed to observe these differences between a correct or incorrect cypher.
 
-  
-
 This type of attack is based on the ability of changing cyphered data y test the result with the oracle. The only way to mitigate this attack is to detect the changes in the cyphered data and reject modified data. The standard way to do this is to create a signature for the data and validate it before making any operation. The signature should be verifiable, and the attacker should not be able to create it, since in this case, the attacker could modify the data and calculate another signature for this modified data.
-
-  
 
 A common type of signature is known as “Hash-Based Message Authentication Code” (HMAC). An HMAC differs by having another layer of verification that requires a private key, which is only known by the person that generate the HMAC and who validates it. If the key is not available, the HMAC cannot be generated. When the data is recieved you can take this data and calculate the HMAC with the private key shared by the emmiter to then compare the HMAC with one sent by the emmiter. This comparision has to be a constant time or you will have introduced another oracle and another type of attack.
 
@@ -5849,3 +5839,17 @@ This opens a new window where we previsualize the document
 ![[Pasted image 20241205173626.png]]
 ![[Pasted image 20241205175255.png]]
 ![[Pasted image 20241209120736.png]]
+![[Pasted image 20241212114135.png]]
+![[Pasted image 20241212114226.png]]
+![[Pasted image 20241212114325.png]]
+![[Pasted image 20241212114843.png]]
+![[Pasted image 20241212120307.png]]
+![[Pasted image 20241212120507.png]]
+![[Pasted image 20241212120841.png]]
+![[Pasted image 20241212121038.png]]
+![[Pasted image 20241212121117.png]]
+
+
+---
+## Final Test
+![[Pasted image 20241212173518.png]]
