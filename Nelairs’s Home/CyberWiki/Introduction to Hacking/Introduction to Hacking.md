@@ -5853,3 +5853,7 @@ This opens a new window where we previsualize the document
 ---
 ## Final Test
 ![[Pasted image 20241212173518.png]]
+
+## Practice Machine
+
+### IMF:1
