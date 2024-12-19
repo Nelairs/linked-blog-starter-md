@@ -39,11 +39,12 @@ A self-made wiki with knowledge acquired during my career
 
 ## Quick Access
 
-- [[Practical Command Injection]]
+- [[Practical Command Injection#REVERSE SHELL CODE]]
 - [[OWASP]]
 - [[Introduction to Hacking]]
 - [[Introduction to Hacking]]
-- [[Practical Command Injection]]
+- [[Practical Command Injection#treat shell]]
+- [[Introduction to Hacking#Exploiting Vulnhub machine MyExpense]]
 
   
 

@@ -5854,6 +5854,91 @@ This opens a new window where we previsualize the document
 ## Final Test
 ![[Pasted image 20241212173518.png]]
 
-## Practice Machine
+## Practice Machines
 
 ### IMF:1
+
+So we start by doing some recon
+Using `arp-scan` and some research of the the MAC's OUI I found that the IP that we are looking for is `192.168.1.38`
+![[Pasted image 20241218204120.png]]
+Now let do some enum with nmap
+![[Pasted image 20241218210936.png]]
+![[Pasted image 20241218211332.png]]
+Something caught my attention inspecting the code
+![[Pasted image 20241218211550.png]]
+These scripts seems like some b64 encoded and striped
+![[Pasted image 20241218211643.png]]
+This is what the decoded b64 is
+![[Pasted image 20241218212652.png]]
+`flag2{aW1mYWRtaW5pc3RyYXRvcg==}yYXRvcg==}`
+And it contains
+![[Pasted image 20241218212851.png]]
+
+So looking a little more I found a flag in the contact.php source code
+![[Pasted image 20241218211918.png]]
+It seems to be another b64 encoded text, and it says the following
+![[Pasted image 20241218212141.png]]
+Now lets try the admin login page
+![[Pasted image 20241218215652.png]]
+As we can see we have a login panel, and in the source code we have a suprise
+![[Pasted image 20241218215744.png]]
+Roger is one of the workers, the director in fact
+![[Pasted image 20241218215809.png]]
+So we can try using this username
+![[Pasted image 20241218215855.png]]
+As seen the user exists, so we can now try and see if we can guess the password
+After trying passwords for a long time nothing shows up, so I tried some type juggling attack
+![[Pasted image 20241218220957.png]]
+And this attack worked, so we logged in
+`flag3{Y29udGludWVUT2Ntcw==}` === `continueTOcms`
+![[Pasted image 20241218221116.png]]
+Once in, we have the following in the CMS
+![[Pasted image 20241218222146.png]]
+![[Pasted image 20241218222157.png]]
+After trying some LFI exploits did not fund anything
+![[Pasted image 20241218222451.png]]But after using a single quote
+![[Pasted image 20241218222534.png]]
+Lets begin the sqli
+With come tries we can see that a boolean based sqli
+![[Pasted image 20241218230301.png]]
+So using nmap I found the following
+`sqlmap -u http://192.168.1.38/imfadministrator/cms.php?pagename=home --cookie="PHPSESSID=4ba1kf6ndt6pa3v70v7i2htf42" -D admin -T pages -C pagename --dump`
+![[Pasted image 20241218230827.png]]
+One of the pages does not appears listed on the html
+We have the following
+![[Pasted image 20241218231033.png]]
+Appears to be a QRcode, using https://zxing.org/w/decode.jspx to decode the QR code
+![[Pasted image 20241218231121.png]]
+`flag4{dXBsb2Fkcjk0Mi5waHA=}`
+![[Pasted image 20241218231208.png]]
+This leads us to the following upload page
+![[Pasted image 20241218231608.png]]
+Lets try uploading a PHP script
+With burpsuite I intercepted the request to see if we can bypass the restrictions
+![[Pasted image 20241219003946.png]]
+It does not accepts text, nor php or other types of files, appear to accept images
+After changin the content type and the magic number
+![[Pasted image 20241219004304.png]]
+We succesfully uploaded the file, now lets try the following script
+![[Pasted image 20241219002351.png]]
+And we can see that a WAF is detecting our payload, so lets try to bypass this
+![[Pasted image 20241219004504.png]]
+We can use either one of these payloads and try
+![[Pasted image 20241219002136.png]]
+![[Pasted image 20241219002313.png]]
+And done, it got uploaded
+![[Pasted image 20241219004629.png]]
+Now, I didnt made a directory search previously so lets see if we can find some directories
+In the dirsearch over /imfadministrator I found an uploads directory
+![[Pasted image 20241219010559.png]]
+Great, we have the directory and the name, that is the hexadecimal returned in the response
+![[Pasted image 20241219011427.png]]
+I had to change the file extension to .gif so it works
+We have execution
+Now lets grant a reverse shell
+![[Pasted image 20241219012133.png]]
+Remember to URL encode the characters
+![[Pasted image 20241219012153.png]]
+perfect, we have another flag
+![[Pasted image 20241219012836.png]]
+`flag5{YWdlbnRzZXJ2aWNlcw==}` === `agentservices`
