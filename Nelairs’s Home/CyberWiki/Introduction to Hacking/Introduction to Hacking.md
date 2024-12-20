@@ -5942,3 +5942,9 @@ Remember to URL encode the characters
 perfect, we have another flag
 ![[Pasted image 20241219012836.png]]
 `flag5{YWdlbnRzZXJ2aWNlcw==}` === `agentservices`
+With this clue, I tried to find file with the name agent in it.
+![[Pasted image 20241219164354.png]]
+The first one is a compiled binary, an the second is some config file
+![[Pasted image 20241219164655.png]]
+Seems like a service is being deployed by the user root in the port 7788
+![[Pasted image 20241219164903.png]]
