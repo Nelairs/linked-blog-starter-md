@@ -1057,3 +1057,76 @@ I used the ss command with the following flags
 - p Check PIDs
 ![[Pasted image 20241226000513.png]]
 A TERMINAR ES MUY DIFICIL EL PRIV ESC
+
+### TwoMillion
+#### Initial Access
+About TwoMillion
+
+TwoMillion is an Easy difficulty Linux box that was released to celebrate reaching 2 million users on HackTheBox. The box features an old version of the HackTheBox platform that includes the old hackable invite code. After hacking the invite code an account can be created on the platform. The account can be used to enumerate various API endpoints, one of which can be used to elevate the user to an Administrator. With administrative access the user can perform a command injection in the admin VPN generation endpoint thus gaining a system shell. An .env file is found to contain database credentials and owed to password re-use the attackers can login as user admin on the box. The system kernel is found to be outdated and CVE-2023-0386 can be used to gain a root shell.
+
+![[Pasted image 20250106164654.png]]
+Added the domain to /etc/hosts
+So we have a legacy HTB page
+![[Pasted image 20250106170023.png]]
+I found two forms, one to log in, and another that is an for an invitation code
+![[Pasted image 20250106170201.png]]
+![[Pasted image 20250106170209.png]]
+While I hack the invitation code, Ill make a dirbuster
+![[Pasted image 20250106170633.png]]'So, hence the code,
+![[Pasted image 20250106170659.png]]
+I found the function that validates the invitation code
+![[Pasted image 20250106171448.png]]
+As seen, there is also the code where the inv code is created
+![[Pasted image 20250106174221.png]]So back in the /invite directory I found the function
+![[Pasted image 20250106174436.png]]
+And it actually says that they are usign ROT13, so
+![[Pasted image 20250106174545.png]]
+So, lets make that request
+![[Pasted image 20250106174646.png]]
+And we have it
+![[Pasted image 20250106174802.png]]
+Perfect, now are logged in, so we can make another enumeration
+![[Pasted image 20250106175226.png]]
+There is nothing new by being authenticated, the only thing that caugth my attention is the /api endpoint, so lets enumerate it
+The api enumeration did not returned nothing usefull
+But if we use the /api endpoint we ahve some info
+![[Pasted image 20250106182831.png]]
+The endpoint /api/v1/admin/settings/update is interesting, so lets try it
+![[Pasted image 20250106184207.png]]
+Once I change the Content Type
+![[Pasted image 20250106184244.png]]
+![[Pasted image 20250106185237.png]]
+And it appears that I changed my account to admin
+![[Pasted image 20250106185336.png]]
+So, now my account is set as admin, I downloaded the vpn connection to see if there is any I can do with that
+There is nothing I can do with the VPN connection from the page, but I remember that there is an endpoint that is under admin privileges, and since now I have those privileges Ill try there
+![[Pasted image 20250106190825.png]]
+![[Pasted image 20250106190939.png]]
+This creates a VPn connection for the username that we provide, and it does not check if it exists
+![[Pasted image 20250106191102.png]]
+We can inject commands
+![[Pasted image 20250106191208.png]]
+So, lets try a reverse shell
+![[Pasted image 20250106191539.png]]
+![[Pasted image 20250106191657.png]]
+#### Priv Esc
+![[Pasted image 20250106192241.png]]
+![[Pasted image 20250106192404.png]]
+Lets try if this pass is reused `SuperDuperPass123`
+![[Pasted image 20250106192556.png]]
+
+We have the user flag `46c82963ea28d481be1cbd623949df2d`
+Now, I havent found any SUID file nor permision as sudo
+But by enumerating the OS I found that the kernel has an known CVE
+![[Pasted image 20250106193122.png]]
+![[Pasted image 20250106193128.png]]
+https://securitylabs.datadoghq.com/articles/overlayfs-cve-2023-0386/#how-the-cve-2023-0386-vulnerability-works
+
+I used this exploit
+https://github.com/puckiestyle/CVE-2023-0386
+
+I transfered from my machine to the victim using an http server
+
+And we are root
+![[Pasted image 20250106194240.png]]
+flag `c7879db1fc7774e7c2dd6c79d3686ae0`
