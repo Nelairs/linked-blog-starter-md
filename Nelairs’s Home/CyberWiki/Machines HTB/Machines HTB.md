@@ -1058,7 +1058,7 @@ I used the ss command with the following flags
 ![[Pasted image 20241226000513.png]]
 A TERMINAR ES MUY DIFICIL EL PRIV ESC
 
-### TwoMillion
+### TwoMillion✅
 #### Initial Access
 About TwoMillion
 
@@ -1130,3 +1130,58 @@ I transfered from my machine to the victim using an http server
 And we are root
 ![[Pasted image 20250106194240.png]]
 flag `c7879db1fc7774e7c2dd6c79d3686ae0`
+
+### GreenHorn
+#### Initial Access
+![[Pasted image 20250114143924.png]]
+I had to add the domain to the /etc/hosts binary
+At first glance various things catch my eye
+![[Pasted image 20250114150450.png]]
+We can try for directory listing, path traversal, search for pluck, and we can see that is written in PHP.
+We also have this gitea in the port 3000
+![[Pasted image 20250114150847.png]]
+![[Pasted image 20250114151033.png]]
+Doing a quick search for "Pluck CMS" we have some vulnerability disclosed, CVE-2023-25828
+In parallel I created an account in the Gitea, and found a valid username for login in
+![[Pasted image 20250114152336.png]]
+I found the following inside the repository
+![[Pasted image 20250114152909.png]]
+It seems like a hashed password
+![[Pasted image 20250114152939.png]]
+![[Pasted image 20250114152953.png]]
+Lets try if we can use this password somewhere
+![[Pasted image 20250114162654.png]]
+The password was valid in the /login.php panel
+![[Pasted image 20250114162001.png]]
+![[Pasted image 20250114162058.png]]
+As we can see, we have a 4.7.18 version of pluck, this is a vulnerable version
+![[Pasted image 20250114162207.png]]
+https://www.exploit-db.com/exploits/51592
+I found the page that has the file upload form
+![[Pasted image 20250114163159.png]]
+![[Pasted image 20250114165552.png]]
+I will use the reverse shell and exploit from the following repo
+https://github.com/Rai2en/CVE-2023-50564_Pluck-v4.7.18_PoC
+Once uploaded and executed
+![[Pasted image 20250114173041.png]]
+![[Pasted image 20250114173100.png]]
+Since the user reused the password, we can move horizontally
+![[Pasted image 20250114173759.png]]
+#### Priv Esc
+After enumerating wuth the user `junior` the only thing that catches my eye is the pdf in his home directory, I used find / -perm 4000, sudo -l , ps and nothing useful was there
+So I started an http server to download this pdf
+![[Pasted image 20250114174727.png]]
+![[Pasted image 20250114174801.png]]
+This is the content of the PDF file
+![[Pasted image 20250114174932.png]]
+Doing some research I found a repo called Depix, this is a project to depixalate these kind of redactions
+[GitHub - spipm/Depixelization_poc: Depix is a PoC for a technique to recover plaintext from pixelized screenshots.](https://github.com/spipm/Depixelization_poc)
+So I took a screenshot from the PDF and cropped the photo
+![[Pasted image 20250114175832.png]]
+![[Pasted image 20250114180053.png]]
+I could not make this work, the image was not clear, ill have to take a look to this
+The password is  `sidefromsidetheothersidesidefromsidetheotherside`
+
+So we rooted
+![[Pasted image 20250114180516.png]]
+`76feec59d67717abbc3b74f000796f80`
