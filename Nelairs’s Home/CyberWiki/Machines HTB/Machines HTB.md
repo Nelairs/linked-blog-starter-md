@@ -1131,7 +1131,7 @@ And we are root
 ![[Pasted image 20250106194240.png]]
 flag `c7879db1fc7774e7c2dd6c79d3686ae0`
 
-### GreenHorn
+### GreenHorn✅
 #### Initial Access
 ![[Pasted image 20250114143924.png]]
 I had to add the domain to the /etc/hosts binary
@@ -1179,7 +1179,9 @@ Doing some research I found a repo called Depix, this is a project to depixalate
 So I took a screenshot from the PDF and cropped the photo
 ![[Pasted image 20250114175832.png]]
 ![[Pasted image 20250114180053.png]]
-I could not make this work, the image was not clear, ill have to take a look to this
+I could not make this work, the image was not clear, ill have to take a look to this writeup
+[GreenHorn | ryuki's blog](https://blog.ryuki.dev/ctf/htb/machines/greenhorn)
+
 The password is  `sidefromsidetheothersidesidefromsidetheotherside`
 
 So we rooted
