@@ -1187,3 +1187,76 @@ The password is  `sidefromsidetheothersidesidefromsidetheotherside`
 So we rooted
 ![[Pasted image 20250114180516.png]]
 `76feec59d67717abbc3b74f000796f80`
+
+### Good Games ✅
+#### Initial Access
+![[Pasted image 20250122171342.png]]
+![[Pasted image 20250122171601.png]]
+We have a Login portal as the most important page
+![[Pasted image 20250122171749.png]]
+So I created an account to see what we have
+![[Pasted image 20250122171909.png]]
+There is nothing important at first sight
+' or 1=1 -- -
+Trying these simple SQLi I found the following, and appears to be vulnerable
+![[Pasted image 20250122172854.png]]
+But If we used it in the email field
+![[Pasted image 20250122172944.png]]
+And this seems to log us as admin
+I had to add the domain so the page loads properly
+![[Pasted image 20250122173947.png]]
+Perfect, since this input is vulnerable, we can try and extract info from the DB
+Ill be using SQL map to exploit this
+So I saved the request to this file
+And fired SQLmap
+![[Pasted image 20250122182442.png]]
+![[Pasted image 20250122182504.png]]
+Once I found the db name I started dumping all data
+![[Pasted image 20250122184022.png]]
+Finally, after sometime, I found the following passwords, one belongs to the user I created
+So Ill try and crack this pass since looks like a md5 hash
+![[Pasted image 20250122185514.png]]
+And yes, we have it
+![[Pasted image 20250122185550.png]]So, perfect, we have the admin pass, so we can now access the second page
+![[Pasted image 20250122185732.png]]
+perfect, we are inside this second panel
+![[Pasted image 20250122185935.png]]
+Lets see what we have
+![[Pasted image 20250122190135.png]]
+In the profile I have some input fields
+This changes our profile card
+![[Pasted image 20250122190233.png]]
+This site is using python and flask as programming language, so lets try something
+![[Pasted image 20250122190741.png]]
+And yes, this site is vulnerable to STTI
+![[Pasted image 20250122190924.png]]
+So lets find how to execute at system level
+Now using this oneliner lets establish a reverse shell
+`{{ self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}`
+![[Pasted image 20250122193223.png]]
+![[Pasted image 20250122193234.png]]
+![[Pasted image 20250122193425.png]]
+For the looks we seem to be in a docker container, we can see that the hostname and the network created is like the defaults from docker
+![[Pasted image 20250122232035.png]]
+We need to scan the network to see if there is something to do, since there is no other way
+
+##### Port scanner
+`(echo '' > /dev/tcp/<ip_address>/<port>) 2>/dev/null && echo “[*] Port open” || echo “[*] Port closed”`
+
+using this one liner i created a port scanner
+![[Pasted image 20250122234258.png]]
+This is a mistake, i used the ip .2 and I should use the .1 for the hsot machine
+![[Pasted image 20250123002411.png]]
+I wanted to use ssh with the account admin but do not exists
+I found another username in the container
+![[Pasted image 20250123002745.png]]
+![[Pasted image 20250123002834.png]]
+Maybe lets try this username and the pass we have
+Before this I tried copying the bash binary and setting the SUID bit to it, so if we can use augustus well have how escalate privileges
+![[Pasted image 20250123003130.png]]
+We are now suer augustus in the host machine, so we broke out from the container
+#### Priv Esc
+I was wrong with the bash, I had to copy th bash binary as augustus in the host machine, and then as root in the container I set the SUID bit
+![[Pasted image 20250123004351.png]]
+I was not able to do this and then I realized that I had to assign the owner of the binary and then the permissions
+![[Pasted image 20250123005359.png]]
