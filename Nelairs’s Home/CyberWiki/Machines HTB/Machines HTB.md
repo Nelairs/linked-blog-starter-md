@@ -1261,7 +1261,7 @@ I was wrong with the bash, I had to copy th bash binary as augustus in the host 
 I was not able to do this and then I realized that I had to assign the owner of the binary and then the permissions
 ![[Pasted image 20250123005359.png]]
 
-### Tool Box
+### Tool Box✅
 #### Initial Access
 ![[Pasted image 20250123135944.png]]
 So, we have a windows machine, lets begin with the enumeration of the services
