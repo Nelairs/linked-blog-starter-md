@@ -1308,3 +1308,41 @@ And this works
 Once we are in the host machine we can change to the root user without passwd
 find / -name root.txt 2>/dev/null
 ![[Pasted image 20250123173119.png]]
+
+### Buff✅
+#### Initial Access
+![[Pasted image 20250128155547.png]]
+![[Pasted image 20250128160525.png]]
+![[Pasted image 20250128160755.png]]
+It appears to be some gym management system
+This system has a known vulnerability as we can find in exploit db
+https://www.exploit-db.com/exploits/48506
+I had to use python 2.7 to work
+Finally i uploaded the nc.exe binary so I can have a proper reverse shell
+![[Pasted image 20250128165721.png]]
+![[Pasted image 20250128165921.png]]
+#### Priv Esc
+The only insteresting binary found is this CloudMe_1112.exe
+![[Pasted image 20250128170737.png]]
+This is an enterprise cloud software, and I found some vulnerabilities that take advantages of a Buffer overflow
+So this has a service running in the localhost port 8888, this is the default port for this service
+We can confirm this by `netstat -an | findstr "LISTENING"`
+![[Pasted image 20250128171620.png]]
+At this point im kinda lost, so I watch the walkthrough of S4vitaar
+https://www.youtube.com/watch?v=TytUFooC3kU
+So, now we need to tunnel the connections since the service is running in the windows localhost, so to access it we should go from our attacker machine -> to victim machine -> localhost service port 8888, so we can exploit this version of Cloud Me
+So for this I will use chisel
+Now I had to download the binaries of chisel for win and linux, to run both one in server mode and the other in client mode
+![[Pasted image 20250128190913.png]]
+So we have running the chisel server, now we need the client on the windows machine and forward the 8888 port through the tunnel
+This is how we forward our port 8888 to the 8888 port in our server machine
+![[Pasted image 20250128192031.png]]
+![[Pasted image 20250128192042.png]]
+Now I'll use the following exploit for the BoF
+https://www.exploit-db.com/exploits/48389
+![[Pasted image 20250128192723.png]]
+I have to change the shellcode to establish another reverse shell, so using msfvenom
+![[Pasted image 20250128193310.png]]
+I used the -v flag to change the name of the variable
+![[Pasted image 20250128194240.png]]
+![[Pasted image 20250128194556.png]]
