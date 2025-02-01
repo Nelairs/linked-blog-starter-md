@@ -1346,3 +1346,86 @@ I have to change the shellcode to establish another reverse shell, so using msfv
 I used the -v flag to change the name of the variable
 ![[Pasted image 20250128194240.png]]
 ![[Pasted image 20250128194556.png]]
+
+### Sauna✅
+![[Pasted image 20250131182445.png]]
+We have some company names
+![[Pasted image 20250131182626.png]]
+![[Pasted image 20250131184003.png]]
+These hints can make us think that we are facing a Domain Controler
+![[Pasted image 20250131184813.png]]
+```
+LDAP
+ldapsearch
+
+SMB
+crackmapexec
+smbmap
+smbclient
+
+RPC
+rcpclient
+```
+So I had to see S4vitaar's video, since I was lost, so now, I am using hacktricks to enumerate the ldap service
+https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-ldap.html?highlight=389#389-636-3268-3269---pentesting-ldap
+Here we have the naming contexts
+![[Pasted image 20250131190336.png]]
+Now using the naming context I can enumerate more information 
+And now I've got a whole lot more information
+![[Pasted image 20250131190559.png]]
+Something that caught my attention is a name
+So lets narrow the search
+![[Pasted image 20250131190646.png]]
+Now we have a name there, these could be a valid username
+So I created a list of possible combination
+![[Pasted image 20250131190902.png]]
+Now Ill use a tool called kerbrute
+https://github.com/ropnop/kerbrute
+![[Pasted image 20250131191513.png]]
+![[Pasted image 20250131191839.png]]
+We have a valid username
+But we can also use the names found in the webpage to expand our list
+![[Pasted image 20250131192736.png]]
+And we have a two usernames and a TGT hash to crack
+![[Pasted image 20250131192915.png]]
+![[Pasted image 20250131193328.png]]
+Now we have the hash, lets crack it
+With hashcat I found the mode we need to user to crack it
+![[Pasted image 20250131193857.png]]
+And done, we have it
+`hashcat -m 18200 hash /usr/share/wordlists/rockyou.txt`
+![[Pasted image 20250131194042.png]]
+`fsmith:Thestrokes23`
+Now I used evilWinRM to access the machine
+![[Pasted image 20250131195045.png]]
+So using an http server I uploaded the WinPEAS binary
+![[Pasted image 20250131202226.png]]
+![[Pasted image 20250131203456.png]]
+![[Pasted image 20250131203538.png]]
+So, we need to use bloodhound for this, and I dont even know how to do it
+To install use `apt install neo4j bloodhound`
+![[Pasted image 20250131205139.png]]
+First I need to make a change and use java 11
+![[Pasted image 20250131205324.png]]
+![[Pasted image 20250131205500.png]]
+Once we create this user and pass we can open bloodhound
+![[Pasted image 20250131205731.png]]
+![[Pasted image 20250131205801.png]]
+Now we need to collect all the victim's system information, for this we will use a PS script
+https://github.com/puckiestyle/powershell/blob/master/SharpHound.ps1
+![[Pasted image 20250131214104.png]]
+![[Pasted image 20250131214310.png]]
+![[Pasted image 20250131214418.png]]
+Now we upload this zip to bloodhound
+I cant use bloodhound, I have some errors unzipping the data
+usign the video I found that we can make a DCSync attack
+![[Pasted image 20250131220412.png]]
+This could be done by Using Mimikatz or impacket-secretsdump
+This would end in a Pass The Hash attack
+![[Pasted image 20250131220738.png]]
+This is the output of impacket
+Now to make the pass the hash 
+If we use impacket-psexec and the hash NT
+![[Pasted image 20250131221331.png]]
+We have now access as NT auth system
+![[Pasted image 20250131221417.png]]
