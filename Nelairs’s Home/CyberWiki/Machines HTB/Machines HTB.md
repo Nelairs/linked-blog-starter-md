@@ -1429,3 +1429,24 @@ If we use impacket-psexec and the hash NT
 ![[Pasted image 20250131221331.png]]
 We have now access as NT auth system
 ![[Pasted image 20250131221417.png]]
+### OpenSource
+#### Initial Access
+I've already started this machine so I'll explain and continue it from where I left it
+First, during the enumeration I found only two services exposed from the machine, port 22 and 80,
+so I entered the webpage and it appears that is a file sharing system, so enumerating the web we have an upload functionality, this functionality once we upload the file gives us the path. We also have the source code of the application so we can explore that. By exploring the code I found a password in previous commits of the .git and the upload function that appears to be vulnerable.
+![[Pasted image 20250218111914.png]]
+![[Pasted image 20250218112003.png]]
+![[Pasted image 20250218114313.png]]
+![[Pasted image 20250218114525.png]]
+![[Pasted image 20250218114821.png]]
+`dev01:Soulless_Developer#2022@10.10.10.128:5187`
+I'm thinking that I can use the vulnerability in the upload function
+![[Pasted image 20250218120157.png]]
+I added this to the functions, and Ill try to upload this new views.py, this could work since the `get_files_name` does no ensures if the file exists and we will be able to overwrite the views.py
+![[Pasted image 20250218121850.png]]
+![[Pasted image 20250218122204.png]]
+This did not worked since what we need to do is to only specify the path 
+![[Pasted image 20250218123403.png]]
+Since that bash did not worked Ill try this one new
+![[Pasted image 20250218123832.png]]
+![[Pasted image 20250218153200.png]]
