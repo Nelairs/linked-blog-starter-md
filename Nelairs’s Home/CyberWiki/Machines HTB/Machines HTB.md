@@ -1450,3 +1450,70 @@ This did not worked since what we need to do is to only specify the path
 Since that bash did not worked Ill try this one new
 ![[Pasted image 20250218123832.png]]
 ![[Pasted image 20250218153200.png]]
+![[Pasted image 20250222184333.png]]
+At this point I am so lost I had to look at a walkthrough
+https://www.youtube.com/watch?v=Be5wJyhgB_A
+it seems that we need to exploit the debug console of werkzug
+This is done using this guide
+https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-web/werkzeug.html?highlight=werkzeug#werkzeug-console-pin-exploit
+basically the foothold is that we can create the PIN needed to use the debug console
+![[Pasted image 20250222201857.png]]
+With the python3 script we can create the using some of the infomation we can gather via LFi or the machine itself
+We can change the public info like the `username` and the `getattr(mod, '__file__', None)`
+
+![[Pasted image 20250222202710.png]]
+This is the value we need as is disclosed in the filename 
+Now the private bits, we can get those by exploiting the machine connection or the LFI
+As we have been told in the guide, we can get the MAC address and we need to convert it to decimal
+![[Pasted image 20250222203131.png]]
+Now for the second bit
+The /etc/machine-id does not exists so, we need to use the second option and concatenate the two values
+![[Pasted image 20250222203439.png]]
+Now with all of these we can generate the PIN
+Lets see
+![[Pasted image 20250222203544.png]]
+And we got it 
+![[Pasted image 20250222203706.png]]
+Since we are in a container we could scan for more open ports from the container to the host machine
+Since the alpine linux has not the tcp directory, I found that we can scan with netcat
+![[Pasted image 20250222211706.png]]
+at this time ill use chisel to tunelize and scan these ports
+![[Pasted image 20250222215213.png]]
+![[Pasted image 20250222215222.png]]
+This is how I use chisel, the server is configured via the port 9000 as a reverse proxy, and in the client we forward the localhost:3000 to the port 3000
+So now we can scan the port with nmap
+I had an error here, and I had to forward the port 3000 of the host, so the IP is not the localhost but the 172.17.0.1
+![[Pasted image 20250222215805.png]]
+And with this forwarding we now have access to that page
+![[Pasted image 20250222215902.png]]
+In this page we can access as the user `dev01` using the previous credentials we found in the logs of the .git
+We have the backup of the directory of the user dev01
+This means that we have the .ssh priv key
+![[Pasted image 20250222221237.png]]
+We are inside
+![[Pasted image 20250222221740.png]]
+Ill use this script to detect some cronjobs, since after the recon did not found anything
+![[Pasted image 20250222223139.png]]
+This is what we have
+![[Pasted image 20250222224451.png]]
+Since this script executed by root does this
+![[Pasted image 20250222230258.png]]
+And it is using the `date` binary, I could create a new malicious binary and add the path of this binary to the env variable $PATH
+![[Pasted image 20250222230239.png]]
+This is the new binary, it will establish a reverse priv shell
+![[Pasted image 20250222230755.png]]
+![[Pasted image 20250222230818.png]]
+This is not working, so I had to use another way, it seems that we can exploit the usage of git as its being executed as root
+Since we have a .git directory in our home, anytime the actions on git are executed it triggers something called pre-commit, this are simple scripts
+![[Pasted image 20250222232307.png]]
+Now using this scripts, we can get execution as the user commiting the files to the repo, in this case, root
+![[Pasted image 20250222232511.png]]
+https://gtfobins.github.io/gtfobins/git/
+We need to add this to the .git/hooks directory
+![[Pasted image 20250222232752.png]]
+Adding the precommit and giving exec permissions
+![[Pasted image 20250222233111.png]]
+Now we should gain SUID access to the bash anytime
+![[Pasted image 20250222233157.png]]
+![[Pasted image 20250222233659.png]]
+![[Pasted image 20250222233728.png]]
