@@ -1429,7 +1429,7 @@ If we use impacket-psexec and the hash NT
 ![[Pasted image 20250131221331.png]]
 We have now access as NT auth system
 ![[Pasted image 20250131221417.png]]
-### OpenSource
+### OpenSource ✅
 #### Initial Access
 I've already started this machine so I'll explain and continue it from where I left it
 First, during the enumeration I found only two services exposed from the machine, port 22 and 80,
@@ -1492,6 +1492,7 @@ This means that we have the .ssh priv key
 ![[Pasted image 20250222221237.png]]
 We are inside
 ![[Pasted image 20250222221740.png]]
+#### Priv Esc
 Ill use this script to detect some cronjobs, since after the recon did not found anything
 ![[Pasted image 20250222223139.png]]
 This is what we have
@@ -1517,3 +1518,15 @@ Now we should gain SUID access to the bash anytime
 ![[Pasted image 20250222233157.png]]
 ![[Pasted image 20250222233659.png]]
 ![[Pasted image 20250222233728.png]]
+### Active
+#### Initial Access
+![[Pasted image 20250224171139.png]]
+![[Pasted image 20250224171158.png]]
+![[Pasted image 20250224171216.png]]
+![[Pasted image 20250224182331.png]]
+After some recon It appears we have some info in the shares, we have a Groups.xml
+![[Pasted image 20250224192353.png]]
+This is a password for the user SVC_TGS, after some search I find out that this is encripted by the GPP `Group Policy Password`
+![[Pasted image 20250224192926.png]]
+GPPstillStandingStrong2k18
+![[Pasted image 20250224194926.png]]
