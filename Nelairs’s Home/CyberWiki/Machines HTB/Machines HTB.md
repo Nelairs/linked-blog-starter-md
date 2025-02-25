@@ -1530,3 +1530,17 @@ This is a password for the user SVC_TGS, after some search I find out that this 
 ![[Pasted image 20250224192926.png]]
 GPPstillStandingStrong2k18
 ![[Pasted image 20250224194926.png]]
+#### priv esc
+![[Pasted image 20250224233431.png]]
+![[Pasted image 20250224233628.png]]
+We have an interesting group, `Domain Admins 0x200` which has only one user
+![[Pasted image 20250224233819.png]]
+using Impacket tools
+![[Pasted image 20250224235519.png]]
+I found that the Administrator account has an SPN (https://books.spartan-cybersec.com/cpad/vulnerabilidades-y-ataques-en-ad/kerberoasting/utilizando-impacket-getuserspns) configured
+With this I dumped the TGS for the Administrator Account
+![[Screenshot 2025-02-25 000107.png]]Now we can try and crack the hash
+![[Pasted image 20250225000601.png]]
+Using john and the rockyou wordlist
+![[Pasted image 20250225001519.png]]Now using impacket-psexec we have a cmd
+![[Pasted image 20250225002156.png]]
