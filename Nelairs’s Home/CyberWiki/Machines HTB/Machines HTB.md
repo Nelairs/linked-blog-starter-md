@@ -1518,7 +1518,7 @@ Now we should gain SUID access to the bash anytime
 ![[Pasted image 20250222233157.png]]
 ![[Pasted image 20250222233659.png]]
 ![[Pasted image 20250222233728.png]]
-### Active
+### Active ✅
 #### Initial Access
 ![[Pasted image 20250224171139.png]]
 ![[Pasted image 20250224171158.png]]
@@ -1544,3 +1544,24 @@ With this I dumped the TGS for the Administrator Account
 Using john and the rockyou wordlist
 ![[Pasted image 20250225001519.png]]Now using impacket-psexec we have a cmd
 ![[Pasted image 20250225002156.png]]
+
+### Support 
+#### Initial Access
+![[Pasted image 20250227161128.png]]
+Using ldapsearch
+![[Pasted image 20250227164512.png]]
+![[Pasted image 20250227164840.png]]
+We dont have so much info here
+![[Pasted image 20250227164927.png]]
+And with RPCclient we cant access anonymously
+![[Pasted image 20250227170140.png]]
+This is what we have in the share
+Inside the zip we have
+![[Pasted image 20250227170418.png]]
+Using this hint
+![[Pasted image 20250227170718.png]]
+Using Strings we have a little more info
+![[Pasted image 20250227171124.png]]
+We can see more strings using the encoding flag
+![[Pasted image 20250227171243.png]]
+As we can see we have a potential username support\ldap
