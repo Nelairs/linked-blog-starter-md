@@ -1565,3 +1565,67 @@ Using Strings we have a little more info
 We can see more strings using the encoding flag
 ![[Pasted image 20250227171243.png]]
 As we can see we have a potential username support\ldap
+I had to follow the walkthrough to use ILSpy, this is a .net decompiler
+![[Pasted image 20250301002615.png]]
+With this decompiler
+![[Pasted image 20250301002926.png]]
+We have this as the function that encripts the password
+![[Pasted image 20250301004858.png]]
+It seems that this is making a b64 decode and then a decodes the result with an XOR a key and the byte 0xDF
+So I converted the C# code to python using chatgpt
+```python3
+import base64
+
+def decrypt_password(enc_password, key):
+    array = base64.b64decode(enc_password)
+    key_bytes = key.encode()  # Convierte la clave en bytes
+    decrypted_bytes = bytearray(len(array))
+
+    for i in range(len(array)):
+        decrypted_bytes[i] = (array[i] ^ key_bytes[i % len(key_bytes)]) ^ 0xDF
+
+    return decrypted_bytes
+
+# Datos proporcionados
+enc_password = "0Nv32PTwgYjzg9/8j5TbmvPd3e7WhtWWyuPsyO76/Y+U193E"
+key = "armando"
+
+# Desencriptar
+decrypted = decrypt_password(enc_password, key)
+print(decrypted.decode(errors="ignore"))  # Intenta decodificar a texto legible
+
+#El método que estás usando es una **cifrado por #XOR con clave repetitiva**, combinado con una #transformación adicional de XOR con `0xDF`.
+#
+#
+```
+And this is the password
+![[Pasted image 20250301010016.png]]
+`nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz`
+Now if we try to use the binary we cant because we need to add the hostname to /etc/hosts
+So, we have the username support\ldap and a password
+It seems that the password is correct
+![[Pasted image 20250301010958.png]]
+After trying to use evilwinrm or crackmapexec, we appear to not be in the remote management group with this user
+So lets try enumerating other services as RPC
+To access to RPC remember to user `user%password`
+![[Pasted image 20250301012143.png]]
+This are all domain users
+And in the domain admins group we only have the administrator account
+![[Screenshot 2025-03-01 012348.png]]So, we can create a valid user dictionary
+![[Screenshot 2025-03-01 012732.png]]
+![[Screenshot 2025-03-01 013401.png]]
+We validated the users
+The password is not re used
+![[Pasted image 20250301014310.png]]
+So enumerating ldap we have too much info to analyze, but from the binary we have the user support that we can validate using kerbrute
+This is the ldap enumeration
+![[Pasted image 20250301015321.png]]
+And here we validate the common usernames
+![[Pasted image 20250301015628.png]]
+We have all the support info
+![[Screenshot 2025-03-01 015805.png]]
+We have the info field with something like a password `Ironside47pleasure40Watchful`
+![[Pasted image 20250301020150.png]]
+Perfect, we can access with evilwinrm
+![[Pasted image 20250301020436.png]]
+`687c0cdd22303c8e4b91b15a232bf89e`
