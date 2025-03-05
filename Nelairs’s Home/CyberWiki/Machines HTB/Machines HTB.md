@@ -1629,3 +1629,25 @@ We have the info field with something like a password `Ironside47pleasure40Watch
 Perfect, we can access with evilwinrm
 ![[Pasted image 20250301020436.png]]
 `687c0cdd22303c8e4b91b15a232bf89e`
+Im going to try and use Bloodhound
+So I have to collect the AD info, an for this Ill use ADRecon.ps1 script
+![[Pasted image 20250304213011.png]]
+To use bloodhound GUI use apt install neo4j bloodhound
+And do some config
+Run neo4j
+![[Pasted image 20250304222634.png]]
+Then enter the webpage in localhost:7474
+![[Pasted image 20250304225307.png]]
+Access using user and pass neo4j, then we have to change the password
+Once this is done, we can open bloodhound and use this credentials
+![[Pasted image 20250304225431.png]]
+![[Pasted image 20250304225501.png]]
+After 3000 years, I am using bloodhound-pytohn to collect data
+Pay attention to subdomains, such as, dc.support.htb, I had to add this subdomain to the /etc/hosts file
+![[Pasted image 20250305002629.png]]
+With this data in Bloodhound, we can see that the user support is in a group called shared support accounts
+![[Pasted image 20250305003253.png]]
+And this group has the following privileges over the dc.support.htb server
+![[Pasted image 20250305003418.png]]
+To continue I need to read this, and understand it
+THIS MACHINE IS NOT EASY
