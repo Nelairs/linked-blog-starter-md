@@ -1629,6 +1629,7 @@ We have the info field with something like a password `Ironside47pleasure40Watch
 Perfect, we can access with evilwinrm
 ![[Pasted image 20250301020436.png]]
 `687c0cdd22303c8e4b91b15a232bf89e`
+#### Priv Esc
 Im going to try and use Bloodhound
 So I have to collect the AD info, an for this Ill use ADRecon.ps1 script
 ![[Pasted image 20250304213011.png]]
@@ -1651,3 +1652,23 @@ And this group has the following privileges over the dc.support.htb server
 ![[Pasted image 20250305003418.png]]
 To continue I need to read this, and understand it
 THIS MACHINE IS NOT EASY
+https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/resource-based-constrained-delegation.html
+Following the hacktricks guide
+First Ill need the Powermad script
+https://raw.githubusercontent.com/Kevin-Robertson/Powermad/refs/heads/master/Powermad.ps1
+Then we create a new machine called SERVICEA with password 123456
+![[Pasted image 20250305174356.png]]
+Then with PowerView tools, we can check and enumerate the AD
+https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/refs/heads/master/Recon/PowerView.ps1
+![[Pasted image 20250305180317.png]]
+Then we need to add our new computer to the victim computer (DC) as a trusted delegate
+![[Pasted image 20250305180752.png]]
+At this point everything should be configured, and we can use the impacket rbcd tool
+![[Pasted image 20250305181712.png]]I had to create again the computer and configure it since it wasnt listed on the LDAP directory
+we have now our ST
+![[Pasted image 20250305184607.png]]
+Now with this TGT, we set it to a variable to the use it with impacketpsexec
+![[Pasted image 20250305185347.png]]
+And with psexec we are in
+![[Pasted image 20250305185446.png]]
+9c13f1e593d9f88013f06b1c40e38d4b
