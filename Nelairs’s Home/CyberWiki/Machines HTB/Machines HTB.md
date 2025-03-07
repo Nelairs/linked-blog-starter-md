@@ -1545,7 +1545,7 @@ Using john and the rockyou wordlist
 ![[Pasted image 20250225001519.png]]Now using impacket-psexec we have a cmd
 ![[Pasted image 20250225002156.png]]
 
-### Support 
+### Support ✅
 #### Initial Access
 ![[Pasted image 20250227161128.png]]
 Using ldapsearch
