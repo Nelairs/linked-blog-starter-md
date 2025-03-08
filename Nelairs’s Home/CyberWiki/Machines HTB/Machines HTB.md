@@ -1672,3 +1672,25 @@ Now with this TGT, we set it to a variable to the use it with impacketpsexec
 And with psexec we are in
 ![[Pasted image 20250305185446.png]]
 9c13f1e593d9f88013f06b1c40e38d4b
+
+### Forest
+#### Initial Access
+sudo nmap -sS -p- --open --min-rate 5000 -vvv -n -Pn \<ip> -oG allports
+![[Pasted image 20250307181421.png]]
+We have anon auth to LDAP service
+![[Pasted image 20250307190223.png]]
+And this is how I enumerate all the users via LDAP
+![[Pasted image 20250307193634.png]]
+Now if I save this names in to file
+![[Pasted image 20250307193905.png]]
+This accounts are not working, this accounts have the `objectCategory` set to user, so we could find some other stuff with `objectClass=*`
+Finally I did not used the objectClass argument
+![[Pasted image 20250307205321.png]]
+We got one, there is a service account with do not require pre auth,
+![[Pasted image 20250307210355.png]]
+Now we can crack the pass with john
+![[Pasted image 20250307210853.png]]
+Now using evilwinrm lets try if we are part of the remote management user group
+![[Pasted image 20250307211123.png]]
+`69205a1db0a006da56ff687458d5b303`
+#### Priv Esc
