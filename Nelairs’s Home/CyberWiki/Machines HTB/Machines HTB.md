@@ -1673,7 +1673,7 @@ And with psexec we are in
 ![[Pasted image 20250305185446.png]]
 9c13f1e593d9f88013f06b1c40e38d4b
 
-### Forest
+### Forest ✅
 #### Initial Access
 sudo nmap -sS -p- --open --min-rate 5000 -vvv -n -Pn \<ip> -oG allports
 ![[Pasted image 20250307181421.png]]
@@ -1694,3 +1694,24 @@ Now using evilwinrm lets try if we are part of the remote management user group
 ![[Pasted image 20250307211123.png]]
 `69205a1db0a006da56ff687458d5b303`
 #### Priv Esc
+Now lets use bloodhound to see what we have
+![[Pasted image 20250307233650.png]]
+We have this group which has WriteDACL Policy to the domain HTB.LOCAL
+![[Pasted image 20250307234443.png]]
+We now have a posible DCSync path to explode
+This is since we are member of SERVICE ACCOUNTS > PRIVILEGED IT ACCOUNTS > FOREST.HTB.LOCAL
+![[Pasted image 20250307235535.png]]
+Well, after some refreshing time, I realized that as member of ACCOUNT OPERATORS, we can create new users 
+![[Pasted image 20250308004425.png]]
+Now we need to add this user to the EXCHANGE WINDOWS PERMISSIONS group that has WriteDACL permissions over HTB.LOCAL
+![[Pasted image 20250308004554.png]]
+Now we can exploit the DCsync attack, but first we need to grant the user we created with this permissions
+So using this intructions and the PowerView module
+![[Pasted image 20250308005509.png]]
+I had to see s4vitar's video since the Add-DomainObjectAcl instuction wasnt working, this is because we need to use the -TargetIdentity and -PrincipalIdetity as following
+![[Pasted image 20250308010145.png]]
+We can give the user this permissions to then use impacket secrets dump
+![[Pasted image 20250308010944.png]]
+And with the nthash
+![[Pasted image 20250308010834.png]]
+e64a66056a2685490bd4e1d863777471
