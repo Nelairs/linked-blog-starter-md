@@ -1,4 +1,4 @@
-I'll write my walkthrough the HTB machines that I’d be doing.
+eI'll write my walkthrough the HTB machines that I’d be doing.
 
 ---
 
@@ -1715,3 +1715,37 @@ We can give the user this permissions to then use impacket secrets dump
 And with the nthash
 ![[Pasted image 20250308010834.png]]
 e64a66056a2685490bd4e1d863777471
+
+### Return✅
+#### Initial Access
+![[Pasted image 20250308202042.png]]
+![[Pasted image 20250308202348.png]]
+It didnt seem to have anon auth in neither SMB, RPC or LDAP
+![[Pasted image 20250308203850.png]]
+It seems we have an LDAP service with an user and pass
+![[Pasted image 20250308204009.png]]
+If we change de Server Address and set a rogue LDAP service, we get this
+![[Pasted image 20250308204604.png]]
+`1edFg43012!!`
+Lets check if these are valid credentials
+![[Pasted image 20250308205341.png]]
+It seems that via smb the credential are correct, but ldap service is not working
+We can access RPC tho
+![[Pasted image 20250308210014.png]]
+I did no found anything here, but I tried and we can access Remote management using evilwinrm with these creds
+![[Pasted image 20250308210624.png]]
+fd87fcc794951d8619e7cc0b843b53e3
+#### Priv Access
+Lets use Bloodhound to see with what are we working
+Seems that one of the posible ways to escalate is abusing some of the groups we are members
+![[Pasted image 20250308220144.png]]
+Looking how to exploit these groups, I found the following POC
+https://www.hackingarticles.in/windows-privilege-escalation-server-operator-group/
+So Ill try and follow it
+We exploit the Service control binary to change the paths of the services, in this case we are changing the path of the VMTools, so we can use netcat instead and get a reverse shell
+![[Pasted image 20250308221605.png]]
+Once we restart the service we got the reverse shell since the binary path was hijacked
+![[Pasted image 20250308221718.png]]
+Got it, we rooted the machine
+![[Pasted image 20250308221913.png]]
+`9a0db9d9f4f5eaac891e57a39939e972`
