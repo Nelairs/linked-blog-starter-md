@@ -42,13 +42,10 @@ A self-made wiki with knowledge acquired during my career
 - [[Practical Command Injection#REVERSE SHELL CODE]]
 - [[OWASP]]
 - [[Introduction to Hacking]]
-- [[Introduction to Hacking]]
+- [[Active Directory Post-Exploitation Cheat Sheet]]
 - [[Practical Command Injection#treat shell]]
 - [[Introduction to Hacking#Exploiting Vulnhub machine MyExpense]]
 
-  
-
-  
 
 [[Scripts]]
 

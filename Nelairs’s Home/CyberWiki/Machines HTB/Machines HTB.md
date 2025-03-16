@@ -1,4 +1,4 @@
-eI'll write my walkthrough the HTB machines that I’d be doing.
+I'll write my walkthrough the HTB machines that I’d be doing.
 
 ---
 
@@ -1749,3 +1749,45 @@ Once we restart the service we got the reverse shell since the binary path was h
 Got it, we rooted the machine
 ![[Pasted image 20250308221913.png]]
 `9a0db9d9f4f5eaac891e57a39939e972`
+
+# Seasonals
+## Season 7
+### Dog - Linux - Easy
+#### Initial Access
+![[Pasted image 20250314134855.png]]
+We have found some info with the http-git enum from nmap
+![[Pasted image 20250314135129.png]]
+In the webpage we have some usernames, and a Login panel
+![[Pasted image 20250314135306.png]]
+While I use a dirbuster, I got the .git directory so I can analyze it
+![[Pasted image 20250314140001.png]]
+![[Pasted image 20250314211616.png]]
+Finally using the virtual enviroment I installed git-dumper
+With this I got all the .git repo
+We have a hardcoded cred for the mysql db
+![[Pasted image 20250315180128.png]]
+`BackDropJ2024DS2024`
+This creds do no work for ssh, at least no with root user
+We have some users in the comits
+![[Pasted image 20250315180642.png]]
+And we have a reused cred with user tifanny@dog.htb
+![[Pasted image 20250315181334.png]]
+We have a possible list of names
+![[Pasted image 20250315181419.png]]
+The version of backdrop is 1.27.1
+There is an Authenticated RCE exploit for this version available in ExploitDB
+https://www.exploit-db.com/exploits/52021
+This exploit created the evil zip to install in the cms
+![[Pasted image 20250315182650.png]]
+I had to compress the directory /shell/ with tar so the server accepted it
+Once uploaded
+![[Pasted image 20250315184156.png]]
+After some troubles
+![[Pasted image 20250315184649.png]]
+Now we have to do some lateral movement to the user johncusack
+![[Pasted image 20250315185012.png]]
+THis was easy, since is reusing the creds from tifanny
+AS the user john, we have some sudo permissions
+![[Pasted image 20250315185418.png]]
+Now remember the root creds for mysql?
+![[Pasted image 20250315185812.png]]
